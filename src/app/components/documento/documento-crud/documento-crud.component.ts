@@ -65,6 +65,8 @@ export class DocumentoCrudComponent implements OnInit {
       nombre: new FormControl(doc.nombre, [Validators.required]),
       descripcion: new FormControl(doc.descripcion, [Validators.required]),
     });
+
+    this.protocoloDetalle(this.editando);
   }
 
   f(x: string) {
