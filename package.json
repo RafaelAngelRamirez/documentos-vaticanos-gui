@@ -23,6 +23,7 @@
     "@angular/service-worker": "~10.0.9",
     "@codice-progressio/input-validaciones": "^0.1.1-5",
     "@codice-progressio/modal": "^0.1.11",
+    "ngx-autosize": "^1.8.4",
     "ngx-toastr": "^13.2.0",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.0",

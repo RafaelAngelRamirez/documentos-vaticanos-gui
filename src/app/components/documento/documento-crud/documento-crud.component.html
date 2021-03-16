@@ -1,7 +1,4 @@
-<form 
-
-[id]="idGenerado"
-*ngIf="formulario" [formGroup]="formulario">
+<form [id]="idGenerado" *ngIf="formulario" [formGroup]="formulario">
   <div class="row">
     <!-- 
     =====================================
@@ -12,6 +9,7 @@
       <div class="form-group">
         <small class="form-text text-muted">Nombre</small>
         <textarea
+          autosize
           [ngClass]="{
             'is-invalid': vs.invalid(f('nombre')),
             'is-valid': vs.valid(f('nombre'))
@@ -38,6 +36,7 @@
       <div class="form-group">
         <small class="form-text text-muted">Descripción</small>
         <textarea
+          autosize
           [ngClass]="{
             'is-invalid': vs.invalid(f('descripcion')),
             'is-valid': vs.valid(f('descripcion'))
