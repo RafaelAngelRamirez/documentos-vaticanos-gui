@@ -10,6 +10,8 @@
         <small class="form-text text-muted">Nombre</small>
         <textarea
           autosize
+          onlyGrow="true"
+          minRows="1"
           [ngClass]="{
             'is-invalid': vs.invalid(f('nombre')),
             'is-valid': vs.valid(f('nombre'))
@@ -37,6 +39,7 @@
         <small class="form-text text-muted">Descripción</small>
         <textarea
           autosize
+          onlyGrow="true"
           [ngClass]="{
             'is-invalid': vs.invalid(f('descripcion')),
             'is-valid': vs.valid(f('descripcion'))
