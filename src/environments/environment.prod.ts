@@ -1,3 +1,5 @@
 export const environment = {
-  production: true
+  production: true,
+  base: (path: string) =>
+    'https://documentos-vaticanos-api.herokuapp.com/'.concat(path),
 };

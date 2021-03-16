@@ -1,0 +1,38 @@
+<div class="row">
+  <div class="col-12">
+    <h1>
+      Documentos
+      <a
+        (click)="crear()"
+        class="btn btn-primary"
+        href="javascript:void(0)"
+        role="button"
+        ><i class="fas fa-plus-circle"></i> Nuevo documento</a
+      >
+    </h1>
+    <hr />
+
+    <div *ngFor="let documento of documentos" class="col-12 mb-3">
+      <app-documento-crud
+        [datos]="{ documento: documento }"
+        (eliminado)="eliminado($event)"
+        (guardado)="guardado($event)"
+      >
+      </app-documento-crud>
+      <hr />
+    </div>
+  </div>
+</div>
+
+<codice-modal [id]="idModalCrear">
+  <div class="row">
+    <div class="col-12">
+      <h1>Crear documento</h1>
+    </div>
+  </div>
+  <app-documento-crud
+    [datos]="{ documento: nuevoDocumento, editando: true }"
+    (guardado)="guardado($event)"
+  >
+  </app-documento-crud>
+</codice-modal>

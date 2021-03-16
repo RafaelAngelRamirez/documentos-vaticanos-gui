@@ -1,0 +1,93 @@
+<form 
+
+[id]="idGenerado"
+*ngIf="formulario" [formGroup]="formulario">
+  <div class="row">
+    <!-- 
+    =====================================
+     nombre
+    =====================================
+    -->
+    <div class="col-12 col-md-4">
+      <div class="form-group">
+        <small class="form-text text-muted">Nombre</small>
+        <textarea
+          [ngClass]="{
+            'is-invalid': vs.invalid(f('nombre')),
+            'is-valid': vs.valid(f('nombre'))
+          }"
+          class="form-control documento-crud-elemento"
+          formControlName="nombre"
+        ></textarea>
+
+        <codice-validaciones [campo]="f('nombre')"></codice-validaciones>
+      </div>
+    </div>
+    <!-- 
+    =====================================
+     END nombre
+    =====================================
+    -->
+
+    <!-- 
+    =====================================
+     descripcion
+    =====================================
+    -->
+    <div class="col-12 col-md-6">
+      <div class="form-group">
+        <small class="form-text text-muted">Descripción</small>
+        <textarea
+          [ngClass]="{
+            'is-invalid': vs.invalid(f('descripcion')),
+            'is-valid': vs.valid(f('descripcion'))
+          }"
+          class="form-control documento-crud-elemento"
+          formControlName="descripcion"
+          cols="30"
+        ></textarea>
+        <codice-validaciones [campo]="f('descripcion')"></codice-validaciones>
+      </div>
+    </div>
+    <!-- 
+    =====================================
+     END descripcion
+    =====================================
+    -->
+
+    <div class="col-12 col-md-2">
+      <a
+        *ngIf="!editando"
+        (click)="editar()"
+        class="btn ms-1 btn-outline-primary"
+        href="javascript:void(0)"
+        role="button"
+      >
+        <i *ngIf="!cargando; else sync" class="fas fa-edit"></i
+      ></a>
+
+      <a
+        *ngIf="editando"
+        (click)="guardar(formulario.value, formulario.invalid)"
+        class="btn ms-1 btn-outline-success"
+        href="javascript:void(0)"
+        role="button"
+      >
+        <i *ngIf="!cargando; else sync" class="fas fa-save"></i
+      ></a>
+      <a
+        *ngIf="this.datos?.documento?._id"
+        (click)="eliminar()"
+        class="btn ms-1 btn-outline-danger"
+        href="javascript:void(0)"
+        role="button"
+      >
+        <i *ngIf="!cargando; else sync" class="fas fa-times-circle"></i
+      ></a>
+    </div>
+  </div>
+</form>
+
+<ng-template #sync>
+  <i class="fas fa-sync fa-spin"></i>
+</ng-template>
