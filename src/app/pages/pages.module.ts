@@ -6,10 +6,11 @@ import { DocumentosComponent } from './documentos/documentos.component';
 import { TableroComponent } from './tablero/tablero.component';
 import { ComponentsModule } from '../components/components.module';
 import { ModalModule } from '@codice-progressio/modal';
+import { DocumentoVisorComponent } from './documento-visor/documento-visor.component';
 
 const routes: Routes = [
   { path: 'tablero', component: TableroComponent },
-  { path: 'documento/:doc', component: DocumentosComponent },
+  { path: 'documento/:doc', component: DocumentoVisorComponent },
   { path: 'documentos', component: DocumentosComponent },
   {
     path: '',
@@ -26,7 +27,12 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [PagesComponent, DocumentosComponent, TableroComponent],
+  declarations: [
+    PagesComponent,
+    DocumentosComponent,
+    TableroComponent,
+    DocumentoVisorComponent,
+  ],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
