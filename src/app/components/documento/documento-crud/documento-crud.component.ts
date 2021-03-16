@@ -7,6 +7,7 @@ import {
   Renderer2,
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
 import { InputValidacionesService } from '@codice-progressio/input-validaciones';
 import { Documento } from '../../../models/documento.model';
 import { DocumentoService } from '../../../services/documento.service';
@@ -50,6 +51,8 @@ export class DocumentoCrudComponent implements OnInit {
   @Output() guardado = new EventEmitter<Documento>();
 
   constructor(
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
     private renderer: Renderer2,
     public vs: InputValidacionesService,
     public docService: DocumentoService
@@ -116,6 +119,10 @@ export class DocumentoCrudComponent implements OnInit {
       },
       () => (this.cargando = false)
     );
+  }
+
+  leer() {
+    this.router.navigate(['documento', this.datos.documento.url]);
   }
 }
 

@@ -13,6 +13,7 @@ export interface Documento {
     }
   ];
   descripcion: string;
+  url: string;
 }
 export interface DocumentoSimple {
   _id:string

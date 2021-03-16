@@ -9,6 +9,7 @@ import { ModalModule } from '@codice-progressio/modal';
 
 const routes: Routes = [
   { path: 'tablero', component: TableroComponent },
+  { path: 'documento/:doc', component: DocumentosComponent },
   { path: 'documentos', component: DocumentosComponent },
   {
     path: '',
