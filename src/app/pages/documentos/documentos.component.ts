@@ -18,8 +18,24 @@ export class DocumentosComponent implements OnInit {
 
   documentos: Documento[] = [];
   idModalCrear = 'idModalCrear';
+  cargando = false
   ngOnInit(): void {
-    this.documentoService.documentos.subscribe((x) => (this.documentos = x));
+    // Si en el servicio alguna de las operaciones arroja algún
+    // resultado nos suscribimos automaticamente.
+    this.documentoService.documentos.subscribe((x) => {
+      this.documentos = x;
+    });
+    // Si no hay documentos cargamos
+    if (this.documentos.length === 0) {
+      this.cargarDocumentos();
+    }
+  }
+
+  cargarDocumentos() {
+    this.cargando = true
+    this.documentoService.buscar('').subscribe(x=>{
+      this.cargando = false
+    }, ()=> this.cargando = false)
   }
 
   nuevoDocumento: Documento = {} as Documento;
