@@ -33,6 +33,12 @@ export class DocumentoService {
       );
   }
 
+  buscarPorUrl(url: string) {
+    return this.http.get<Documento>(
+      this.base.concat('/url/' + encodeURIComponent(url))
+    );
+  }
+
   guardarModificar(documento: Documento) {
     return this.http.put<Documento>(this.base, documento);
   }

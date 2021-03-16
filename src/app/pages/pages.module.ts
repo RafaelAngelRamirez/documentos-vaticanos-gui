@@ -10,7 +10,7 @@ import { DocumentoVisorComponent } from './documento-visor/documento-visor.compo
 
 const routes: Routes = [
   { path: 'tablero', component: TableroComponent },
-  { path: 'documento/:doc', component: DocumentoVisorComponent },
+  { path: 'documento/:urlDoc', component: DocumentoVisorComponent },
   { path: 'documentos', component: DocumentosComponent },
   {
     path: '',

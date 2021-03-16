@@ -1,1 +1,4 @@
-<p>documento-visor works!</p>
+<app-documento-crud
+  *ngIf="documento"
+  [datos]="{ documento: documento }"
+></app-documento-crud>
