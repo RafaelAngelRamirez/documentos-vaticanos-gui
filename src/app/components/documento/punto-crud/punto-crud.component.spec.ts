@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DocumentoPuntoComponent } from './documento-punto.component';
+import { PuntoCrudComponent } from './punto-crud.component';
 
-describe('DocumentoPuntoComponent', () => {
-  let component: DocumentoPuntoComponent;
-  let fixture: ComponentFixture<DocumentoPuntoComponent>;
+describe('PuntoCrudComponent', () => {
+  let component: PuntoCrudComponent;
+  let fixture: ComponentFixture<PuntoCrudComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DocumentoPuntoComponent ]
+      declarations: [ PuntoCrudComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DocumentoPuntoComponent);
+    fixture = TestBed.createComponent(PuntoCrudComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -48,8 +48,11 @@ export class DocumentoService {
   }
 
   obtenerPuntos(idDocumento: string, idPunto?: string) {
-    let url = this.base.concat(`/${idDocumento}`);
-    url += idPunto ? url.concat(`/punto/${idPunto}`) : url;
+    let url = this.base
+      .concat(`/id/${idDocumento}/punto/`)
+      .concat(idPunto ? `${idPunto}` : '');
+
+    console.log(url);
 
     return this.http.get<Punto[]>(url);
   }
