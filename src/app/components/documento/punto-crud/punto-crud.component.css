@@ -1,0 +1,10 @@
+.mostrar-detalle {
+  border: none;
+  padding-left: 0%;
+  pointer-events: none;
+  border-color: #ccc;
+}
+
+textarea.consecutivo.mostrar-detalle {
+  font-size: 30px;
+}

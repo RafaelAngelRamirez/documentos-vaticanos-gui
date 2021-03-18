@@ -1,1 +1,91 @@
-<p>punto-crud works!</p>
+<form [id]="idGenerado" [formGroup]="formulario">
+  <div class="row">
+    <!-- 
+=====================================
+ consecutivo
+=====================================
+-->
+    <div class="col-12 col-md-2">
+      <div class="form-group">
+        <textarea
+          autosize
+          [onlyGrow]="true"
+          [maxRows]="1"
+          [ngClass]="{
+            'is-invalid': vs.invalid(f('consecutivo')),
+            'is-valid': vs.valid(f('consecutivo'))
+          }"
+          type="text"
+          class="form-control punto-crud-elemento consecutivo"
+          formControlName="consecutivo"
+        ></textarea>
+        <small *ngIf="editando" class="form-text text-muted">Consecutivo</small>
+        <codice-validaciones [campo]="f('consecutivo')"></codice-validaciones>
+      </div>
+    </div>
+    <!-- 
+=====================================
+ END consecutivo
+=====================================
+-->
+
+    <!-- 
+=====================================
+ contenido
+=====================================
+-->
+    <div class="col-12 col-md-10">
+      <div class="form-group">
+        <textarea
+          autosize
+          [onlyGrow]="true"
+          [ngClass]="{
+            'is-invalid': vs.invalid(f('contenido')),
+            'is-valid': vs.valid(f('contenido'))
+          }"
+          class="form-control punto-crud-elemento"
+          formControlName="contenido"
+        ></textarea>
+        <small *ngIf="editando" class="form-text text-muted">Contenido</small>
+        <codice-validaciones [campo]="f('contenido')"></codice-validaciones>
+      </div>
+    </div>
+    <!-- 
+=====================================
+ END contenido
+=====================================
+-->
+
+    <div class="col-12">
+      <a
+        *ngIf="!editando"
+        (click)="editar()"
+        class="btn ms-1 btn-outline-primary"
+        href="javascript:void(0)"
+        role="button"
+      >
+        <i *ngIf="!cargando; else sync" class="fas fa-edit"></i
+      ></a>
+
+      <a
+        *ngIf="editando"
+        (click)="guardar(formulario.value, formulario.invalid)"
+        class="btn ms-1 btn-outline-success"
+        href="javascript:void(0)"
+        role="button"
+      >
+        <i *ngIf="!cargando; else sync" class="fas fa-save"></i
+      ></a>
+      <a
+        *ngIf="this.datos?.documento?._id"
+        (click)="eliminar()"
+        class="btn ms-1 btn-outline-danger"
+        href="javascript:void(0)"
+        role="button"
+      >
+        <i *ngIf="!cargando; else sync" class="fas fa-times-circle"></i
+      ></a>
+    </div>
+
+  </div>
+</form>

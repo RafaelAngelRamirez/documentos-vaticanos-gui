@@ -68,6 +68,7 @@ class PuntoService {
   }
 
   nuevo(documento: DocumentoSimple) {
+    delete documento.punto._id
     return this.root.http.put<Documento>(this.base.concat('nuevo'), documento);
   }
 

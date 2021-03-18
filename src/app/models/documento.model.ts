@@ -1,7 +1,7 @@
 export interface Documento {
-  _id:string
+  _id: string;
   nombre: string;
-  puntos: Punto;
+  puntos: Punto[];
   indice: [
     {
       nombre: {
@@ -16,22 +16,21 @@ export interface Documento {
   url: string;
 }
 export interface DocumentoSimple {
-  _id:string
-  nombre: string;
-  punto: PuntoSimple;
-  descripcion: string;
+  _id?: string;
+  nombre?: string;
+  punto?: PuntoSimple;
+  descripcion?: string;
 }
 
 export interface Punto {
-  _id:string
+  _id: string;
   consecutivo: string;
   contenido: string;
-
   // Debe respetar el orden de aparicion en el texto.
   referencias: Referencia[];
 }
 export interface PuntoSimple {
-  _id:string
+  _id: string;
   consecutivo: string;
   contenido: string;
 
@@ -40,7 +39,7 @@ export interface PuntoSimple {
 }
 
 export interface Referencia {
-  _id:string
+  _id: string;
   descripcion: string;
   url: string;
   local: {

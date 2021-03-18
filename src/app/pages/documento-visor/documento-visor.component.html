@@ -18,10 +18,12 @@
     </a>
   </div>
 
-  <div class="col-12">
-    <app-punto-crud
-      *ngFor="let punto of puntos"
-      [datos]="{ punto: punto }"
+  <div *ngFor="let punto of puntos" class="col-12 mt-3">
+    <app-punto-crud 
+    [datos]="punto"
+    (guardado)="guardado($event)"
+    (eliminado)="eliminado($event)"
     ></app-punto-crud>
+    <hr />
   </div>
 </div>
