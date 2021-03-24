@@ -7,7 +7,12 @@
 -->
     <div class="col-12 col-md-2">
       <div class="form-group">
+        <div *ngIf="!editando" class="text-justify consecutivo">
+          {{ f("consecutivo").value }}
+        </div>
+
         <textarea
+          *ngIf="editando"
           autosize
           [onlyGrow]="true"
           [maxRows]="1"
@@ -16,7 +21,7 @@
             'is-valid': vs.valid(f('consecutivo'))
           }"
           type="text"
-          class="form-control punto-crud-elemento consecutivo"
+          class="form-control"
           formControlName="consecutivo"
         ></textarea>
         <small *ngIf="editando" class="form-text text-muted">Consecutivo</small>
@@ -35,7 +40,11 @@
 =====================================
 -->
     <div class="col-12 col-md-10">
-      <div class="form-group">
+      <div *ngIf="!editando" class="text-justify contenido">
+        {{ f("contenido").value }}
+      </div>
+
+      <div *ngIf="editando" class="form-group">
         <textarea
           autosize
           [onlyGrow]="true"
@@ -86,6 +95,9 @@
         <i *ngIf="!cargando; else sync" class="fas fa-times-circle"></i
       ></a>
     </div>
-
   </div>
 </form>
+
+<ng-template #sync>
+  <i class="fas fa-sync fa-spin"></i>
+</ng-template>
