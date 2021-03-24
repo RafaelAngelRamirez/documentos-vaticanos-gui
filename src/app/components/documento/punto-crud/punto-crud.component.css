@@ -8,3 +8,11 @@
 textarea.consecutivo.mostrar-detalle {
   font-size: 30px;
 }
+
+textarea{
+  resize: none;
+  text-align: justify;
+  white-space: pre-line;
+  -moz-text-align-last: left;
+  text-align-last: left;
+}
