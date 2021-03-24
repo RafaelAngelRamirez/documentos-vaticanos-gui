@@ -69,8 +69,14 @@ export class DocumentoVisorComponent implements OnInit {
     };
   };
 
-  guardado(doc: Documento) {
-    this.puntos = doc.puntos.map(this.transformarPuntos)
+  guardado(punto: Punto) {
+    // Obtenemos la ubicacion del punto actual
+    let i = this.puntos.findIndex((x) => x.punto._id === punto._id);
+    if (i > -1) {
+      this.puntos[i].punto = punto;
+      this.puntos[i].editando = false;
+      this.puntos[i].documento = this.documento;
+    }
   }
 
   eliminado(doc: PuntoSimple) {
