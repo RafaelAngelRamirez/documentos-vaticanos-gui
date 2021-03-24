@@ -100,10 +100,12 @@ export class PuntoCrudComponent implements OnInit {
   }
 
   editar() {
+    if (this.cargando) return;
     this.editando = !this.editando;
   }
 
   eliminar() {
+    if (this.cargando) return;
     this.cargando = true;
     this.docService.punto
       .eliminar({
@@ -120,6 +122,7 @@ export class PuntoCrudComponent implements OnInit {
   }
 
   guardar(punto: PuntoSimple, invalid: boolean) {
+    if (this.cargando) return;
     this.formulario.markAllAsTouched();
     this.formulario.updateValueAndValidity();
     if (invalid) {
