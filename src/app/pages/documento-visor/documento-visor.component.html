@@ -1,23 +1,20 @@
 <div class="row">
   <div class="col-12">
-    <app-documento-crud
-      *ngIf="documento"
-      [datos]="{ documento: documento }"
-    ></app-documento-crud>
+    <h1>
+      {{ documento.nombre }}
+      <a
+        (click)="agregarPunto()"
+        class="btn btn-primary"
+        href="javascript:void(0)"
+        role="button"
+      >
+        <i class="fas fa-plus-circle"></i>
+        Punto
+      </a>
+    </h1>
   </div>
-  <div class="col-12">
-    
-    <a
-      (click)="agregarPunto()"
-      class="btn btn-primary"
-      href="javascript:void(0)"
-      role="button"
-    >
-      <i class="fas fa-plus-circle"></i>
-      Punto
-    </a>
-    <hr>
-  </div>
+  
+  <div class="col-12"><hr /></div>
 
   <div *ngFor="let punto of puntos" class="col-12">
     <app-punto-crud
