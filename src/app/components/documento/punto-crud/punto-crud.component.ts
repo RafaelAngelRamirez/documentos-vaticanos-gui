@@ -57,6 +57,8 @@ export class PuntoCrudComponent implements OnInit {
   @Output() eliminado = new EventEmitter<PuntoSimple>();
   @Output() guardado = new EventEmitter<Punto>();
 
+  mostrarReferencias = false;
+
   constructor(
     private el: ElementRef,
     private router: Router,

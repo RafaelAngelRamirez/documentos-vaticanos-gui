@@ -11,6 +11,17 @@
           {{ f("consecutivo").value }}
         </div>
 
+        <a
+          *ngIf="datos?.punto?.referencias.length > 0"
+          title="Mostrar referencias de este punto"
+          href="javascript:void(0)"
+          class="text-muted"
+          (click)="mostrarReferencias = !mostrarReferencias"
+        >
+          <i *ngIf="!mostrarReferencias" class="fas fa-plus-circle"></i>
+          <i *ngIf="mostrarReferencias" class="fas fa-minus-circle"></i>
+        </a>
+
         <textarea
           *ngIf="editando"
           autosize
@@ -40,9 +51,11 @@
 =====================================
 -->
     <div class="col-12 col-md-10">
-      <div *ngIf="!editando" class="text-justify contenido">
-        {{ f("contenido").value }}
-      </div>
+      <ng-container *ngIf="!editando">
+        <div class="text-justify contenido">
+          {{ f("contenido").value }}
+        </div>
+      </ng-container>
 
       <div *ngIf="editando" class="form-group">
         <textarea
@@ -64,6 +77,21 @@
  END contenido
 =====================================
 -->
+
+    <ng-container *ngIf="mostrarReferencias">
+      <div class="col-12 bg-light"><hr /></div>
+      <div class="col-12 bg-light col-md-2">
+        <span class="text-muted">Referencias</span>
+      </div>
+      <div class="col-12 bg-light col-md-10">
+        <app-referencia-crud
+          *ngFor="let referencia of datos?.punto?.referencias"
+          [referencia]="referencia"
+        >
+        </app-referencia-crud>
+      </div>
+      <div class="col-12 bg-light"><hr /></div>
+    </ng-container>
 
     <div class="col-12">
       <a
