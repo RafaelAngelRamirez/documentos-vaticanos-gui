@@ -1,5 +1,5 @@
-<div *ngIf="!editando" class="font-italic text-justify cursor-pointer">
-  <a *ngIf="f('descripcion').value" [href]="f('descripcion').value"
+<span *ngIf="!editando" class="font-italic text-justify">
+  <a *ngIf="f('url').value" [href]="f('url').value"
     ><i class="fas fa-link"></i
   ></a>
   {{ f("descripcion").value }}
@@ -11,78 +11,98 @@
   >
     <i class="fas fa-edit"></i>
   </a>
-</div>
+</span>
 
-<form *ngIf="formulario && editando" [formGroup]="formulario">
-  <div class="row">
-    <!-- 
-    =====================================
-     descripcion
-    =====================================
-    -->
-    <div class="col-12">
-      <div class="form-group">
-        <textarea
-          [ngClass]="{
-            'is-invalid': vs.invalid(f('descripcion')),
-            'is-valid': vs.valid(f('descripcion'))
-          }"
-          type="text"
-          class="form-control"
-          formControlName="descripcion"
-        ></textarea>
-        <small id="helpId" class="form-text text-muted">Descripción</small>
-        <codice-validaciones [campo]="f('descripcion')"></codice-validaciones>
-      </div>
-    </div>
-    <!-- 
-    =====================================
-     END descripcion
-    =====================================
-    -->
+<div *ngIf="editando" class="row bg-light">
+  <hr />
+  <div class="col-12">
+    <form *ngIf="formulario" [formGroup]="formulario">
+      <div class="row">
+        <!-- 
+      =====================================
+       descripcion
+      =====================================
+      -->
+        <div class="col-12">
+          <div class="form-group">
+            <textarea
+              [ngClass]="{
+                'is-invalid': vs.invalid(f('descripcion')),
+                'is-valid': vs.valid(f('descripcion'))
+              }"
+              type="text"
+              class="form-control"
+              formControlName="descripcion"
+            ></textarea>
+            <small id="helpId" class="form-text text-muted">Descripción</small>
+            <codice-validaciones
+              [campo]="f('descripcion')"
+            ></codice-validaciones>
+          </div>
+        </div>
+        <!-- 
+      =====================================
+       END descripcion
+      =====================================
+      -->
 
-    <!-- 
-    =====================================
-     url
-    =====================================
-    -->
-    <div class="col-12">
-      <div class="form-group">
-        <input
-          [ngClass]="{
-            'is-invalid': vs.invalid(f('url')),
-            'is-valid': vs.valid(f('url'))
-          }"
-          type="text"
-          class="form-control"
-          formControlName="url"
-        />
-        <small id="helpId" class="form-text text-muted">URL</small>
-        <codice-validaciones [campo]="f('url')"></codice-validaciones>
-      </div>
-    </div>
-    <!-- 
-    =====================================
-     END url
-    =====================================
-    -->
+        <!-- 
+      =====================================
+       url
+      =====================================
+      -->
+        <div class="col-12">
+          <div class="form-group">
+            <input
+              [ngClass]="{
+                'is-invalid': vs.invalid(f('url')),
+                'is-valid': vs.valid(f('url'))
+              }"
+              type="text"
+              class="form-control"
+              formControlName="url"
+            />
+            <small id="helpId" class="form-text text-muted">URL</small>
+            <codice-validaciones [campo]="f('url')"></codice-validaciones>
+          </div>
+        </div>
+        <!-- 
+      =====================================
+       END url
+      =====================================
+      --></div>
+    </form>
   </div>
-</form>
-<div *ngIf="editando" class="col-12">
-  <a
-    (click)="guardar(formulario.value, formulario.invalid)"
-    class="btn btn-success mr-3"
-    href="javascript:void(0)"
-    role="button"
-    ><i *ngIf="!cargando; else sync" class="fas fa-save"></i
-  ></a>
-  <a
-    (click)="eliminar()"
-    class="btn btn-danger"
-    href="javascript:void(0)"
-    role="button"
-    ><i *ngIf="!cargando; else sync" class="fas fa-times-circle"></i
-  ></a>
+
+  <div class="col-12">
+    <br />
+  </div>
+
+  <div class="col-12 text-right">
+    <a
+      (click)="guardar(formulario.value, formulario.invalid)"
+      class="btn btn-outline-success btn-xs mx-1"
+      href="javascript:void(0)"
+      ><i *ngIf="!cargando; else sync" class="fas fa-save"> </i> Guardar</a
+    >
+    <a
+      (click)="eliminar()"
+      class="btn btn-outline-danger btn-xs mx-1"
+      href="javascript:void(0)"
+      ><i *ngIf="!cargando; else sync" class="fas fa-times-circle"> </i
+      >Eliminar</a
+    >
+    <a
+      (click)="editando = !editando"
+      class="btn btn-outline-secondary btn-xs"
+      href="javascript:void(0)"
+      ><i *ngIf="!cargando; else sync" class="fas fa-times"> </i> Cancelar</a
+    >
+  </div>
+  <div class="col-12">
+    <br />
+    <hr />
+  </div>
 </div>
 
 <ng-template #sync>

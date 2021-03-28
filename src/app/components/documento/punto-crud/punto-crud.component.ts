@@ -51,6 +51,7 @@ export class PuntoCrudComponent implements OnInit {
   public set datos(value: Partial<Datos>) {
     this._datos = value;
     this.editando = value?.editando ?? false;
+    this.protocoloReferencia(value.punto);
     this.crearFormulario(value.punto);
   }
 
@@ -153,6 +154,10 @@ export class PuntoCrudComponent implements OnInit {
     } else {
       this.docService.punto.nuevo(doc).subscribe(resultado, error);
     }
+  }
+
+  protocoloReferencia(punto: Punto) {
+    punto.contenidoSeparado = punto.contenido.split('[+REF+]');
   }
 }
 

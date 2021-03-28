@@ -11,7 +11,7 @@
           {{ f("consecutivo").value }}
         </div>
 
-        <a
+        <!-- <a
           *ngIf="datos?.punto?.referencias.length > 0"
           title="Mostrar referencias de este punto"
           href="javascript:void(0)"
@@ -20,7 +20,7 @@
         >
           <i *ngIf="!mostrarReferencias" class="fas fa-plus-circle"></i>
           <i *ngIf="mostrarReferencias" class="fas fa-minus-circle"></i>
-        </a>
+        </a> -->
 
         <textarea
           *ngIf="editando"
@@ -53,7 +53,19 @@
     <div class="col-12 col-md-10">
       <ng-container *ngIf="!editando">
         <div class="text-justify contenido">
-          {{ f("contenido").value }}
+          <ng-container
+            *ngFor="
+              let cont of this.datos?.punto.contenidoSeparado;
+              let i = index
+            "
+          >
+            {{ cont }}
+            <app-referencia-crud
+              *ngIf="this.datos?.punto?.referencias[i]"
+              [referencia]="this.datos?.punto?.referencias[i]"
+            >
+            </app-referencia-crud>
+          </ng-container>
         </div>
       </ng-container>
 
@@ -78,20 +90,19 @@
 =====================================
 -->
 
-    <ng-container *ngIf="mostrarReferencias">
+    <!-- <ng-container *ngIf="mostrarReferencias">
       <div class="col-12 bg-light"><hr /></div>
       <div class="col-12 bg-light col-md-2">
         <span class="text-muted">Referencias</span>
       </div>
       <div class="col-12 bg-light col-md-10">
-        <app-referencia-crud
-          *ngFor="let referencia of datos?.punto?.referencias"
-          [referencia]="referencia"
-        >
-        </app-referencia-crud>
+        <ng-container *ngFor="let referencia of datos?.punto?.referencias">
+          <app-referencia-crud [referencia]="referencia"> </app-referencia-crud>
+          <br />
+        </ng-container>
       </div>
       <div class="col-12 bg-light"><hr /></div>
-    </ng-container>
+    </ng-container> -->
 
     <div class="col-12">
       <a

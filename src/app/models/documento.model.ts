@@ -26,6 +26,9 @@ export interface Punto {
   _id: string;
   consecutivo: string;
   contenido: string;
+  
+  // Solo para la interfaz
+  contenidoSeparado: string[];
   // Debe respetar el orden de aparicion en el texto.
   referencias: Referencia[];
 }
@@ -33,7 +36,6 @@ export interface PuntoSimple {
   _id: string;
   consecutivo: string;
   contenido: string;
-
   // Debe respetar el orden de aparicion en el texto.
   referencia: Referencia;
 }
