@@ -46,8 +46,6 @@ export class DocumentoVisorComponent implements OnInit {
       (p) => {
         this.cargandoPuntos = false;
         this.puntos = p.map(this.transformarPuntos);
-
-        console.log(p);
       },
       () => (this.cargandoPuntos = false)
     );
