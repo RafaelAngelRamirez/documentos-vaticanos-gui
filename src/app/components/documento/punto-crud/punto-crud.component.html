@@ -62,7 +62,11 @@
             {{ cont }}
             <app-referencia-crud
               *ngIf="this.datos?.punto?.referencias[i]"
-              [referencia]="this.datos?.punto?.referencias[i]"
+              [datos]="{
+                documento: this.datos.documento,
+                punto: this.datos.punto,
+                referencia: this.datos?.punto?.referencias[i]
+              }"
             >
             </app-referencia-crud>
           </ng-container>

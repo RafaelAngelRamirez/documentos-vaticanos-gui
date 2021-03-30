@@ -55,8 +55,8 @@ export class PuntoCrudComponent implements OnInit {
     this.crearFormulario(value.punto);
   }
 
-  @Output() eliminado = new EventEmitter<PuntoSimple>();
-  @Output() guardado = new EventEmitter<Punto>();
+  @Output() eliminado = new EventEmitter<string>();
+  @Output() guardado = new EventEmitter<string>();
 
   mostrarReferencias = false;
 
@@ -118,7 +118,7 @@ export class PuntoCrudComponent implements OnInit {
       .subscribe(
         (d) => {
           this.cargando = false;
-          this.eliminado.emit(this.formulario.value);
+          this.eliminado.emit(this.formulario.value._id);
         },
         () => (this.cargando = false)
       );
@@ -140,10 +140,12 @@ export class PuntoCrudComponent implements OnInit {
     };
 
     const resultado = (d) => {
+      let nuevoContenido = this.formulario.get('contenido').value;
+      this.datos.punto.contenido = nuevoContenido;
+      this.protocoloReferencia(this.datos.punto);
       this.cargando = false;
-      this.datos.documento = d;
       this.editando = false;
-      this.guardado.emit(d);
+      this.guardado.emit(nuevoContenido);
     };
 
     const error = () => (this.cargando = false);

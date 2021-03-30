@@ -34,10 +34,10 @@ export interface Punto {
 }
 export interface PuntoSimple {
   _id: string;
-  consecutivo: string;
-  contenido: string;
+  consecutivo?: string;
+  contenido?: string;
   // Debe respetar el orden de aparicion en el texto.
-  referencia: Referencia;
+  referencia?: Referencia;
 }
 
 export interface Referencia {

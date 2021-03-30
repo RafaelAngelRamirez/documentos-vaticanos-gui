@@ -1,5 +1,9 @@
 <span *ngIf="!editando" class="font-italic text-justify">
-  <a *ngIf="f('url').value" [href]="f('url').value"
+  <a
+    *ngIf="f('url').value"
+    [href]="f('url').value"
+    target="_blank"
+    rel="noopener noreferrer"
     ><i class="fas fa-link"></i
   ></a>
   <span class="text-info">

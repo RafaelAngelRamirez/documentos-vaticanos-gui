@@ -13,14 +13,14 @@
       </a>
     </h1>
   </div>
-  
+
   <div class="col-12"><hr /></div>
 
-  <div *ngFor="let punto of puntos" class="col-12">
+  <div *ngFor="let punto of puntos; let i = index" class="col-12">
     <app-punto-crud
       [datos]="punto"
-      (guardado)="guardado($event)"
-      (eliminado)="eliminado($event)"
+      (guardado)="guardado($event, i)"
+      (eliminado)="eliminado(i)"
     ></app-punto-crud>
   </div>
 </div>

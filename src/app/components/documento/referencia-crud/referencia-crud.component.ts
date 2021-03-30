@@ -1,7 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { InputValidacionesService } from '@codice-progressio/input-validaciones';
-import { Referencia } from '../../../models/documento.model';
+import {
+  Referencia,
+  DocumentoSimple,
+  Documento,
+  Punto,
+} from '../../../models/documento.model';
+import { DocumentoService } from '../../../services/documento.service';
 
 @Component({
   selector: 'app-referencia-crud',
@@ -9,7 +15,7 @@ import { Referencia } from '../../../models/documento.model';
   styleUrls: ['./referencia-crud.component.css'],
 })
 export class ReferenciaCrudComponent implements OnInit {
-  private _referencia: Referencia;
+  private _datos: Datos;
   private _cargando: boolean;
 
   public get cargando(): boolean {
@@ -23,20 +29,23 @@ export class ReferenciaCrudComponent implements OnInit {
     else this.formulario?.enable();
   }
 
-  public get referencia(): Referencia {
-    return this._referencia;
+  public get datos(): Datos {
+    return this._datos;
   }
   @Input()
-  public set referencia(value: Referencia) {
-    this._referencia = value;
+  public set datos(value: Datos) {
+    this._datos = value;
 
-    this.crearFormulario(value);
+    this.crearFormulario(value.referencia);
   }
 
   formulario: FormGroup;
   editando = false;
 
-  constructor(public vs: InputValidacionesService) {}
+  constructor(
+    private documentoService: DocumentoService,
+    public vs: InputValidacionesService
+  ) {}
 
   ngOnInit(): void {}
 
@@ -58,22 +67,34 @@ export class ReferenciaCrudComponent implements OnInit {
     if (invalid) {
       return;
     }
-
     this.cargando = true;
+
+    let doc: DocumentoSimple = {
+      _id: this.datos.documento._id,
+      punto: {
+        _id: this.datos.punto._id,
+        referencia: model,
+      },
+    };
+
+    this.documentoService.punto.referencia.modificar(doc).subscribe(
+      (data) => {
+        this.cargando = false;
+        this.editando = false;
+      },
+      () => (this.cargando = false)
+    );
   }
 
   eliminar() {
     throw 'URL abierta';
   }
 
+  abrirUrl() {}
+}
 
-  abrirUrl(){
-
-
-
-    
-  }
-
-
-
+interface Datos {
+  documento: Documento;
+  punto: Punto;
+  referencia: Referencia;
 }

@@ -89,7 +89,7 @@ class PuntoService {
 class ReferenciaService {
   base = '';
   constructor(public root: DocumentoService) {
-    this.base = root.base.concat('punto/referencia');
+    this.base = root.base.concat('/referencia/');
   }
 
   nuevo(documento: DocumentoSimple) {
@@ -97,7 +97,7 @@ class ReferenciaService {
   }
 
   modificar(documento: DocumentoSimple) {
-    return this.root.http.put<Documento>(
+    return this.root.http.put<null>(
       this.base.concat('modificar'),
       documento
     );
