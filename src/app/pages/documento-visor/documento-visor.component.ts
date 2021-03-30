@@ -52,7 +52,7 @@ export class DocumentoVisorComponent implements OnInit {
   }
 
   agregarPunto() {
-    this.puntos.push({
+    this.puntos.unshift({
       punto: {} as Punto,
       editando: true,
       documento: this.documento,

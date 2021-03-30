@@ -159,7 +159,7 @@ export class PuntoCrudComponent implements OnInit {
   }
 
   protocoloReferencia(punto: Punto) {
-    punto.contenidoSeparado = punto.contenido.split('[+REF+]');
+    punto.contenidoSeparado = punto.contenido?.split('[+REF+]')?? [];
   }
 }
 
