@@ -60,15 +60,19 @@
             "
           >
             {{ cont }}
-            <app-referencia-crud
-              *ngIf="this.datos?.punto?.referencias[i]"
-              [datos]="{
-                documento: this.datos.documento,
-                punto: this.datos.punto,
-                referencia: this.datos?.punto?.referencias[i]
-              }"
-            >
-            </app-referencia-crud>
+
+            <ng-container *ngIf="this.datos?.punto?.referencias?.length>0">
+              <app-referencia-crud
+                *ngIf="this.datos?.punto?.referencias[i]"
+                [datos]="{
+                  documento: this.datos.documento,
+                  punto: this.datos.punto,
+                  referencia: this.datos?.punto?.referencias[i]
+                }"
+              >
+              </app-referencia-crud>
+
+            </ng-container>
           </ng-container>
         </div>
       </ng-container>
@@ -129,7 +133,6 @@
         <i *ngIf="!cargando; else sync" class="fas fa-save"></i
       ></a>
       <a
-        *ngIf="this.datos?.documento?._id"
         (click)="eliminar()"
         class="btn ms-1 btn-outline-danger"
         href="javascript:void(0)"

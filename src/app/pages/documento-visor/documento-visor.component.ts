@@ -67,15 +67,15 @@ export class DocumentoVisorComponent implements OnInit {
     };
   };
 
-  guardado(contenido:string, i:number) {
+  guardado(contenido: string, i: number) {
     // console.log(contenido)
-    
     // this.puntos[i].editando = false;
     // this.puntos[i].punto.contenido = contenido
   }
 
   eliminado(i: number) {
     this.puntos = this.puntos.splice(i, 1);
+    this.puntos.splice(i, 1);
   }
 }
 
