@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { InputValidacionesService } from '@codice-progressio/input-validaciones';
 import {
@@ -42,6 +42,10 @@ export class ReferenciaCrudComponent implements OnInit {
   formulario: FormGroup;
   editando = false;
 
+  @Input() mostrarEliminar = false;
+
+  eliminado = new EventEmitter<null>();
+
   constructor(
     private documentoService: DocumentoService,
     public vs: InputValidacionesService
@@ -49,7 +53,7 @@ export class ReferenciaCrudComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  crearFormulario(r: Partial<Referencia>) {
+  crearFormulario(r: Referencia) {
     this.formulario = new FormGroup({
       _id: new FormControl(r._id),
       descripcion: new FormControl(r.descripcion?.trim()),
@@ -77,17 +81,55 @@ export class ReferenciaCrudComponent implements OnInit {
       },
     };
 
-    this.documentoService.punto.referencia.modificar(doc).subscribe(
-      (data) => {
-        this.cargando = false;
-        this.editando = false;
-      },
-      () => (this.cargando = false)
-    );
+    if (!model._id) {
+      this.documentoService.punto.referencia.nuevo(doc).subscribe(
+        (data) => {
+          this.cargando = false;
+          this.editando = false;
+          this.datos.referencia.descripcion = doc.punto.referencia.descripcion;
+          this.datos.referencia.url = doc.punto.referencia.url;
+        },
+        () => (this.cargando = false)
+      );
+    } else {
+      this.documentoService.punto.referencia.modificar(doc).subscribe(
+        (data) => {
+          this.cargando = false;
+          this.editando = false;
+          this.datos.referencia.descripcion = doc.punto.referencia.descripcion;
+          this.datos.referencia.url = doc.punto.referencia.url;
+        },
+        () => (this.cargando = false)
+      );
+    }
   }
 
   eliminar() {
-    throw 'URL abierta';
+    if (!this.datos.referencia._id) {
+      this.eliminado.emit();
+      return;
+    }
+
+    this.cargando = true;
+
+    this.documentoService.punto.referencia
+      .eliminar({
+        _id: this.datos.documento._id,
+        punto: {
+          _id: this.datos.punto._id,
+          referencia: {
+            _id: this.datos.referencia._id,
+          } as Referencia,
+        },
+      })
+      .subscribe(
+        () => {
+          this.cargando = false;
+
+          this.eliminado.emit();
+        },
+        () => (this.cargando = false)
+      );
   }
 
   abrirUrl() {}

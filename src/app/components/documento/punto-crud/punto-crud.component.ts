@@ -113,6 +113,7 @@ export class PuntoCrudComponent implements OnInit {
     this.docService.punto
       .eliminar({
         _id: this.datos.documento._id,
+
         punto: { _id: this.formulario.get('_id').value },
       })
       .subscribe(
@@ -122,8 +123,8 @@ export class PuntoCrudComponent implements OnInit {
           this.eliminado.emit(null);
         },
         (error) => {
-          
-          this.cargando = false}
+          this.cargando = false;
+        }
       );
   }
 
@@ -142,27 +143,44 @@ export class PuntoCrudComponent implements OnInit {
       punto,
     };
 
-    const resultado = (d) => {
-      let nuevoContenido = this.formulario.get('contenido').value;
-      this.datos.punto.contenido = nuevoContenido;
-      this.datos.punto._id = d._id;
-      this.protocoloReferencia(this.datos.punto);
-      this.cargando = false;
-      this.editando = false;
-    };
-
     const error = () => (this.cargando = false);
 
     this.cargando = true;
     if (punto._id) {
-      this.docService.punto.modificar(doc).subscribe(resultado, error);
+      this.docService.punto.modificar(doc).subscribe((d) => {
+        let nuevoContenido = this.formulario.get('contenido').value;
+        this.datos.punto.contenido = nuevoContenido;
+        // this.datos.punto._id = d._id;
+        this.protocoloReferencia(this.datos.punto);
+        this.cargando = false;
+        this.editando = false;
+      }, error);
     } else {
-      this.docService.punto.nuevo(doc).subscribe(resultado, error);
+      this.docService.punto.nuevo(doc).subscribe((d) => {
+        let nuevoContenido = this.formulario.get('contenido').value;
+        this.datos.punto.contenido = nuevoContenido;
+        // this.datos.punto._id = d._id;
+        this.protocoloReferencia(this.datos.punto);
+        this.cargando = false;
+        this.editando = false;
+      }, error);
     }
   }
 
   protocoloReferencia(punto: Punto) {
     punto.contenidoSeparado = punto.contenido?.split('[+REF+]') ?? [];
+  }
+
+  agregarReferencia() {
+    let r = {
+      _id: null,
+      descripcion: 'NUEVA REFERENCIA',
+    };
+    this.datos.punto.referencias.push(r as Referencia);
+  }
+
+  eliminarReferencia(i: number) {
+    this.datos.punto.referencias.splice(i, 1);
   }
 }
 

@@ -93,7 +93,7 @@ class ReferenciaService {
   }
 
   nuevo(documento: DocumentoSimple) {
-    return this.root.http.put<Documento>(this.base.concat('nuevo'), documento);
+    return this.root.http.put<Documento>(this.base.concat('nueva'), documento);
   }
 
   modificar(documento: DocumentoSimple) {

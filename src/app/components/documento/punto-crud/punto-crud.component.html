@@ -11,8 +11,8 @@
           {{ f("consecutivo").value }}
         </div>
 
-        <!-- <a
-          *ngIf="datos?.punto?.referencias.length > 0"
+        <a
+          *ngIf="datos?.punto?.referencias?.length > 0"
           title="Mostrar referencias de este punto"
           href="javascript:void(0)"
           class="text-muted"
@@ -20,7 +20,7 @@
         >
           <i *ngIf="!mostrarReferencias" class="fas fa-plus-circle"></i>
           <i *ngIf="mostrarReferencias" class="fas fa-minus-circle"></i>
-        </a> -->
+        </a>
 
         <textarea
           *ngIf="editando"
@@ -61,7 +61,7 @@
           >
             {{ cont }}
 
-            <ng-container *ngIf="this.datos?.punto?.referencias?.length>0">
+            <ng-container *ngIf="this.datos?.punto?.referencias?.length > 0">
               <app-referencia-crud
                 *ngIf="this.datos?.punto?.referencias[i]"
                 [datos]="{
@@ -69,9 +69,9 @@
                   punto: this.datos.punto,
                   referencia: this.datos?.punto?.referencias[i]
                 }"
+                (eliminado)="eliminarReferencia(i)"
               >
               </app-referencia-crud>
-
             </ng-container>
           </ng-container>
         </div>
@@ -98,19 +98,27 @@
 =====================================
 -->
 
-    <!-- <ng-container *ngIf="mostrarReferencias">
-      <div class="col-12 bg-light"><hr /></div>
+    <ng-container *ngIf="mostrarReferencias">
       <div class="col-12 bg-light col-md-2">
         <span class="text-muted">Referencias</span>
       </div>
       <div class="col-12 bg-light col-md-10">
-        <ng-container *ngFor="let referencia of datos?.punto?.referencias">
-          <app-referencia-crud [referencia]="referencia"> </app-referencia-crud>
+        <ng-container
+          *ngFor="let referencia of datos?.punto?.referencias; let i = index"
+        >
+          <app-referencia-crud
+            [datos]="{
+              punto: this.datos.punto,
+              documento: this.datos.documento,
+              referencia: referencia
+            }"
+            (eliminado)="eliminarReferencia(i)"
+          >
+          </app-referencia-crud>
           <br />
         </ng-container>
       </div>
-      <div class="col-12 bg-light"><hr /></div>
-    </ng-container> -->
+    </ng-container>
 
     <div class="col-12">
       <a
@@ -140,6 +148,14 @@
       >
         <i *ngIf="!cargando; else sync" class="fas fa-times-circle"></i
       ></a>
+      <a
+        (click)="agregarReferencia()"
+        class="btn ms-1 btn-outline-secondary"
+        href="javascript:void(0)"
+        role="button"
+      >
+        <i *ngIf="!cargando; else sync" class="fas fa-plus-circle"></i> REF</a
+      >
     </div>
   </div>
 </form>
