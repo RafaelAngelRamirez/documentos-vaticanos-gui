@@ -44,7 +44,7 @@ export class ReferenciaCrudComponent implements OnInit {
 
   @Input() mostrarEliminar = false;
 
-  eliminado = new EventEmitter<null>();
+  @Output() eliminado = new EventEmitter<null>();
 
   constructor(
     private documentoService: DocumentoService,
