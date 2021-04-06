@@ -74,7 +74,6 @@ export class DocumentoVisorComponent implements OnInit {
   }
 
   eliminado(i: number) {
-    this.puntos = this.puntos.splice(i, 1);
     this.puntos.splice(i, 1);
   }
 }
