@@ -45,7 +45,13 @@ export class DocumentoVisorComponent implements OnInit {
     this.documentoService.obtenerPuntos(_id).subscribe(
       (p) => {
         this.cargandoPuntos = false;
-        this.puntos = p.map(this.transformarPuntos);
+        this.puntos = [];
+
+        p.map(this.transformarPuntos).forEach((x) => {
+          setTimeout(() => {
+            this.puntos.push(x);
+          }, 10);
+        });
       },
       () => (this.cargandoPuntos = false)
     );
