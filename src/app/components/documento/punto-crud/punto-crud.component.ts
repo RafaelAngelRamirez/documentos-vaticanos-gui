@@ -176,6 +176,7 @@ export class PuntoCrudComponent implements OnInit {
       _id: null,
       descripcion: 'NUEVA REFERENCIA',
     };
+    if(!this.datos.punto.referencias) this.datos.punto.referencias = []
     this.datos.punto.referencias.push(r as Referencia);
   }
 
