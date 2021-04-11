@@ -13,7 +13,7 @@
     <hr />
 
     <ng-container *ngIf="!cargando; else precarga"></ng-container>
-    <div *ngFor="let documento of documentos" class="col-12 mb-3">
+    <div *ngFor="let documento of documentos" class="col-12 mb-3 fade-in">
       <app-documento-crud
         [datos]="{ documento: documento }"
         (eliminado)="eliminado($event)"
@@ -39,7 +39,7 @@
 </codice-modal>
 
 <ng-template #precarga>
-  <div class="row">
+  <div class="row fade-in">
     <div class="col-12">
       <h1 class="display-1 text-center">
         <i class="fas fa-sync fa-spin"></i>
