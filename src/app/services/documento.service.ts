@@ -23,11 +23,11 @@ export class DocumentoService {
   buscar(termino: string) {
     const terminoWeb = encodeURIComponent(termino);
     return this.http
-      .get<Documento[]>(this.base.concat('/?termino=').concat(terminoWeb))
+      .get<{documentos:Documento[], puntos:Punto[]}>(this.base.concat('/?termino=').concat(terminoWeb))
       .pipe(
         map((r) => {
-          this._documentos = r;
-          this.documentos.next(r);
+          this._documentos = r.documentos;
+          this.documentos.next(r.documentos);
           return r;
         })
       );
