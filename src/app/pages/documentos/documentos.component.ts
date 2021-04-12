@@ -2,7 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalService } from '@codice-progressio/modal';
 import { Documento } from '../../models/documento.model';
-import { DocumentoService } from '../../services/documento.service';
+import {
+  DocumentoService,
+  DocumentosFiltros,
+} from '../../services/documento.service';
 
 @Component({
   selector: 'app-documentos',
@@ -18,24 +21,30 @@ export class DocumentosComponent implements OnInit {
 
   documentos: Documento[] = [];
   idModalCrear = 'idModalCrear';
-  cargando = false
+  cargando = false;
   ngOnInit(): void {
     // Si en el servicio alguna de las operaciones arroja algún
     // resultado nos suscribimos automaticamente.
-    this.documentoService.documentos.subscribe((x) => {
-      this.documentos = x;
+    this.documentoService.documentosBusqueda.subscribe((x) => {
+      this.documentos = x.documentos;
     });
     // Si no hay documentos cargamos
-    if (this.documentos.length === 0) {
+    if (this.documentos === undefined || this.documentos?.length === 0) {
       this.cargarDocumentos();
     }
   }
 
   cargarDocumentos() {
-    this.cargando = true
-    this.documentoService.buscar('').subscribe(x=>{
-      this.cargando = false
-    }, ()=> this.cargando = false)
+    this.cargando = true;
+
+    let filtros = new DocumentosFiltros();
+    filtros.addTermino('');
+    this.documentoService.buscar(filtros).subscribe(
+      (x) => {
+        this.cargando = false;
+      },
+      () => (this.cargando = false)
+    );
   }
 
   nuevoDocumento: Documento = {} as Documento;

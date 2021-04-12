@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router'
-import { DocumentoService } from '../services/documento.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import {
+  DocumentoService,
+  DocumentosFiltros,
+} from '../services/documento.service';
 
 @Component({
   selector: 'app-pages',
@@ -9,9 +12,10 @@ import { DocumentoService } from '../services/documento.service';
 })
 export class PagesComponent implements OnInit {
   constructor(
-    private router: Router, 
+    private router: Router,
     private activatedRouter: ActivatedRoute,
-    private documentoService: DocumentoService) {}
+    private documentoService: DocumentoService
+  ) {}
 
   ngOnInit(): void {}
 
@@ -22,10 +26,18 @@ export class PagesComponent implements OnInit {
     if (!terminoLimpio) return;
     this.buscando = true;
 
-    this.documentoService.buscar(termino).subscribe(
+    let filtros = new DocumentosFiltros();
+    filtros
+      .addTermino(termino)
+      .addOpciones('todosLosTerminosExactos')
+      .addOpciones('todosLosTerminosParcial')
+      .addOpciones('palabraParcial')
+      .addOpciones('palabraCompleta');
+
+    this.documentoService.buscar(filtros).subscribe(
       (docs) => {
         this.buscando = false;
-        this.router.navigate(["documentos"])
+        this.router.navigate(['documentos']);
       },
       () => (this.buscando = false)
     );

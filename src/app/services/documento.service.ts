@@ -9,8 +9,18 @@ import { map } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class DocumentoService {
-  private _documentos: Documento[] = [];
-  documentos = new BehaviorSubject<Documento[]>(this._documentos);
+  /**
+   **Almacena los resultados de busqueda de documentos y puntos en las
+   *diferentes propiedades que permite la interfaz.
+   *
+   * @private
+   * @type {DocumentosBusqueda}
+   * @memberof DocumentoService
+   */
+  private _resultadoBusquedaDocumentos: DocumentosBusqueda = {} as DocumentosBusqueda;
+  documentosBusqueda = new BehaviorSubject<DocumentosBusqueda>(
+    this._resultadoBusquedaDocumentos
+  );
   base = '';
   punto: PuntoService;
   indice: IndiceService;
@@ -20,14 +30,16 @@ export class DocumentoService {
     this.punto = new PuntoService(this);
     this.indice = new IndiceService(this);
   }
-  buscar(termino: string) {
-    const terminoWeb = encodeURIComponent(termino);
+
+  buscar(filtros: DocumentosFiltros) {
+    console.log(filtros.obtenerFiltros())
     return this.http
-      .get<{documentos:Documento[], puntos:Punto[]}>(this.base.concat('/?termino=').concat(terminoWeb))
+      .get<DocumentosBusqueda>(this.base.concat(filtros.obtenerFiltros()))
       .pipe(
         map((r) => {
-          this._documentos = r.documentos;
-          this.documentos.next(r.documentos);
+          console.log(r);
+          this._resultadoBusquedaDocumentos = r;
+          this.documentosBusqueda.next(r);
           return r;
         })
       );
@@ -68,7 +80,7 @@ class PuntoService {
   }
 
   nuevo(documento: DocumentoSimple) {
-    delete documento.punto._id
+    delete documento.punto._id;
     return this.root.http.put<Documento>(this.base.concat('nuevo'), documento);
   }
 
@@ -97,10 +109,7 @@ class ReferenciaService {
   }
 
   modificar(documento: DocumentoSimple) {
-    return this.root.http.put<null>(
-      this.base.concat('modificar'),
-      documento
-    );
+    return this.root.http.put<null>(this.base.concat('modificar'), documento);
   }
   eliminar(documento: DocumentoSimple) {
     return this.root.http.put<Documento>(
@@ -128,5 +137,140 @@ class IndiceService {
       this.base.concat('eliminar'),
       documento
     );
+  }
+}
+
+interface DocumentosBusqueda {
+  documentos: Documento[];
+  documentos_total: number;
+  todosLosTerminosExactos: Documento[];
+  todosLosTerminosExactos_total: number;
+  todosLosTerminosParcial: Documento[];
+  todosLosTerminosParcial_total: number;
+  palabraCompleta: Documento[];
+  palabraCompleta_total: number;
+  palabraParcial: Documento[];
+  palabraParcial_total: number;
+}
+
+export class DocumentosFiltros {
+  private termino = new Set<string>();
+  private puntos = new Set<string>();
+  private opciones = new Set<string>();
+
+  private documentos = new Set<string>();
+  private limit: number = 30;
+  private skip: number = 0;
+
+  constructor() {}
+
+  /**
+   *Agrega un termino de busqueda
+   *
+   * @param {string} termino
+   * @returns
+   * @memberof DocumentosFiltros
+   */
+  addTermino(termino: string) {
+    let t = encodeURIComponent(termino).trim();
+    this.termino.add(t);
+    return this;
+  }
+
+  /**
+   *Agrega puntos para obtenerlos especificamente. Utilizar con 
+   `this.addDocumento()` para mejores resutlados.
+   *
+   * @param {Punto['_id']} punto
+   * @memberof DocumentosFiltros
+   */
+  addPunto(punto: Punto['consecutivo']) {
+    this.puntos.add(punto);
+  }
+
+  /**
+   * Opciones para la busqueda
+   *
+   * @param {('todosLosTerminosExactos'
+   *       | 'todosLosTerminosParcial'
+   *       | 'palabraCompleta'
+   *       | 'palabraParcial')} opcion
+   * @returns
+   * @memberof DocumentosFiltros
+   */
+  addOpciones(
+    opcion:
+      | 'todosLosTerminosExactos'
+      | 'todosLosTerminosParcial'
+      | 'palabraCompleta'
+      | 'palabraParcial'
+  ) {
+    this.opciones.add(opcion);
+    return this;
+  }
+
+  /**
+   * Agrega documentos para limitar la busqueda.
+   *
+   * @param {Documento['_id']} documento
+   * @returns
+   * @memberof DocumentosFiltros
+   */
+  addDocumento(documento: Documento['_id']) {
+    this.documentos.add(documento);
+    return this;
+  }
+
+  /**
+   *Define el limite de elementos a mostrar
+   *
+   * @param {number} limit
+   * @returns
+   * @memberof DocumentosFiltros
+   */
+  setLimit(limit: number) {
+    this.limit = limit;
+    return this;
+  }
+  /**
+   *Define la cantidad de elementos que serán ignorados antes de mostrar los 
+   * resultados
+   *
+   * @param {number} skip
+   * @returns
+   * @memberof DocumentosFiltros
+   */
+  setSkip(skip: number) {
+    this.skip = skip;
+    return this;
+  }
+
+  /**
+   *Obtiene una cadena formatead para agregar a la url como parametros
+   *
+   * @returns {string}
+   * @memberof DocumentosFiltros
+   */
+  obtenerFiltros(): string {
+    let cadena = [];
+
+    if (this.termino.size > 0) {
+      cadena.push('termino=' + Array.from(this.termino).join(','));
+    }
+    if (this.puntos.size > 0) {
+      cadena.push('puntos=' + Array.from(this.puntos).join(','));
+    }
+
+    if (this.opciones.size > 0) {
+      cadena.push('opciones=' + Array.from(this.opciones).join(','));
+    }
+    if (this.documentos.size > 0) {
+      cadena.push('documentos=' + Array.from(this.documentos).join(','));
+    }
+
+    cadena.push('limit=' + this.limit);
+    cadena.push('skip=' + this.skip);
+
+    return '?' + cadena.join('&');
   }
 }
