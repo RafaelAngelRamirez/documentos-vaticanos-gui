@@ -8,7 +8,13 @@
     <div class="col-12 col-md-4">
       <div class="form-group">
         <small class="form-text text-muted">Nombre</small>
+        <h3
+          *ngIf="!editando"
+          [innerHTML]="f('nombre').value | resaltarTerminos"
+          class="font-bolder"
+        ></h3>
         <textarea
+          *ngIf="editando"
           autosize
           [onlyGrow]="true"
           [minRows]="3"
@@ -34,11 +40,16 @@
      descripcion
     =====================================
     -->
-    <div *ngIf="datos.mostrarDescripcion" class="col-12 col-md-6">
+    <div class="col-12 col-md-6">
       <div class="form-group">
         <small class="form-text text-muted">Descripción</small>
 
-        <div [innerHTML]="f('descripcion').value | resaltarTerminos"></div>
+        {{editando}}
+        <div
+          *ngIf="!editando"
+          [innerHTML]="f('descripcion').value | resaltarTerminos"
+          class="justify"
+        ></div>
 
         <textarea
           *ngIf="editando"

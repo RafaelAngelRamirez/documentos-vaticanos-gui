@@ -131,6 +131,5 @@ export class DocumentoCrudComponent implements OnInit {
 interface Datos {
   documento: Documento;
   editando: boolean;
-  mostrarDescripcion: boolean;
   terminos: string[];
 }

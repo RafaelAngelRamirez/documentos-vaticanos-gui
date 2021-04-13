@@ -69,3 +69,7 @@ mark {
   background-color: yellow;
   color: black;
 }
+
+.justify {
+  text-align: justify;
+}
