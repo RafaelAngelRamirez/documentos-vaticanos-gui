@@ -95,7 +95,4 @@ export class DocumentosComponent implements OnInit {
     },
   ];
 
-  obtenerTotal(key: string) {
-    return this.documentosBusqueda[key + '_total']?.pop()?.total ?? 0;
-  }
 }

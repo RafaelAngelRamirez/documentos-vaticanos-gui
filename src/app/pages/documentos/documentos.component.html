@@ -20,7 +20,8 @@
         <app-documento-crud
           [datos]="{
             documento: documento,
-            termino: documentoService.filtros.terminos
+            termino: documentoService.filtros.terminos,
+            editando:false
           }"
           (eliminado)="eliminado($event)"
           (guardado)="guardado($event)"
@@ -34,11 +35,12 @@
 
 <div *ngFor="let clave of clavesResultadoBusqueda" class="row">
   <div class="col-12">
-    <h5>Coincidencias en puntos : {{ clave.titulo }}</h5>
+    <h5>{{ clave.titulo }}</h5>
     <p class="text-muted">
-      {{ clave.descripcion }} Elementos coincidentes:
-
-      {{obtenerTotal(clave.key) }}
+      {{ clave.descripcion }}
+      <span class="text-info font-bold">
+        Total elementos: {{ documentosBusqueda[clave.key + "_total"] | number }}
+      </span>
     </p>
     <hr />
 
