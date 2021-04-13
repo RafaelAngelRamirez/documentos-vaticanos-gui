@@ -12,14 +12,60 @@
     </h1>
     <hr />
 
-    <ng-container *ngIf="!cargando; else precarga"></ng-container>
-    <div *ngFor="let documento of documentos" class="col-12 mb-3 fade-in">
+    <ng-container *ngIf="!cargando; else precarga">
+      <div
+        *ngFor="let documento of documentosBusqueda.documentos"
+        class="col-12 mb-3 fade-in"
+      >
+        <app-documento-crud
+          [datos]="{
+            documento: documento,
+            termino: documentoService.filtros.terminos
+          }"
+          (eliminado)="eliminado($event)"
+          (guardado)="guardado($event)"
+        >
+        </app-documento-crud>
+        <hr />
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+<div *ngFor="let clave of clavesResultadoBusqueda" class="row">
+  <div class="col-12">
+    <h5>Coincidencias en puntos : {{ clave.titulo }}</h5>
+    <p class="text-muted">
+      {{ clave.descripcion }} Elementos coincidentes:
+
+      {{obtenerTotal(clave.key) }}
+    </p>
+    <hr />
+
+    <div
+      *ngFor="let doc of documentosBusqueda[clave.key]"
+      class="col-12 mb-3 fade-in"
+    >
       <app-documento-crud
-        [datos]="{ documento: documento }"
+        [datos]="{
+          documento: doc,
+          puntos: doc.puntos,
+          mostrarDescripcion: false,
+          editando: false
+        }"
         (eliminado)="eliminado($event)"
         (guardado)="guardado($event)"
       >
       </app-documento-crud>
+
+      <app-punto-crud
+        *ngFor="let punto of doc.puntos"
+        [datos]="{
+          documento: doc,
+          punto: punto
+        }"
+      ></app-punto-crud>
+
       <hr />
     </div>
   </div>
@@ -46,4 +92,11 @@
       </h1>
     </div>
   </div>
+</ng-template>
+
+<ng-template #sinResultados>
+  <p class="text-muted">
+    <i class="fas fa-search text-danger"></i>
+    No se encontraron coincidencias
+  </p>
 </ng-template>

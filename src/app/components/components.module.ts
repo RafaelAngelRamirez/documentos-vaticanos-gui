@@ -6,6 +6,7 @@ import { InputValidacionesModule } from '@codice-progressio/input-validaciones';
 import { AutosizeModule } from 'ngx-autosize';
 import { PuntoCrudComponent } from './documento/punto-crud/punto-crud.component';
 import { ReferenciaCrudComponent } from './documento/referencia-crud/referencia-crud.component';
+import { PipesModule } from '../pipes/pipes.module';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { ReferenciaCrudComponent } from './documento/referencia-crud/referencia-
     ReactiveFormsModule,
     InputValidacionesModule,
     AutosizeModule,
+    PipesModule,
   ],
   exports: [
     DocumentoCrudComponent,

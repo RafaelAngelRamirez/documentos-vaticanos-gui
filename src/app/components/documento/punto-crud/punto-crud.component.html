@@ -59,7 +59,7 @@
               let i = index
             "
           >
-            {{ cont }}
+            <span [innerHTML]="cont | resaltarTerminos"></span>
 
             <ng-container *ngIf="this.datos?.punto?.referencias?.length > 0">
               <app-referencia-crud

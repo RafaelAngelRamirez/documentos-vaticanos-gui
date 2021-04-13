@@ -25,6 +25,8 @@ export class DocumentoService {
   punto: PuntoService;
   indice: IndiceService;
 
+  public filtros = new DocumentosFiltros();
+
   constructor(public http: HttpClient) {
     this.base = environment.base('documento');
     this.punto = new PuntoService(this);
@@ -32,12 +34,11 @@ export class DocumentoService {
   }
 
   buscar(filtros: DocumentosFiltros) {
-    console.log(filtros.obtenerFiltros())
+    this.filtros = filtros;
     return this.http
       .get<DocumentosBusqueda>(this.base.concat(filtros.obtenerFiltros()))
       .pipe(
         map((r) => {
-          console.log(r);
           this._resultadoBusquedaDocumentos = r;
           this.documentosBusqueda.next(r);
           return r;
@@ -140,17 +141,17 @@ class IndiceService {
   }
 }
 
-interface DocumentosBusqueda {
+export interface DocumentosBusqueda {
   documentos: Documento[];
-  documentos_total: number;
+  documentos_total: {total:number}[];
   todosLosTerminosExactos: Documento[];
-  todosLosTerminosExactos_total: number;
+  todosLosTerminosExactos_total: {total:number}[];
   todosLosTerminosParcial: Documento[];
-  todosLosTerminosParcial_total: number;
+  todosLosTerminosParcial_total: {total:number}[];
   palabraCompleta: Documento[];
-  palabraCompleta_total: number;
+  palabraCompleta_total: {total:number}[];
   palabraParcial: Documento[];
-  palabraParcial_total: number;
+  palabraParcial_total: {total:number}[];
 }
 
 export class DocumentosFiltros {
@@ -172,9 +173,16 @@ export class DocumentosFiltros {
    * @memberof DocumentosFiltros
    */
   addTermino(termino: string) {
-    let t = encodeURIComponent(termino).trim();
-    this.termino.add(t);
+    termino
+      .trim()
+      .split(',')
+      .map((x) => x.trim())
+      .forEach((x) => this.termino.add(x));
     return this;
+  }
+
+  get terminos() {
+    return Array.from(this.termino);
   }
 
   /**
@@ -233,7 +241,7 @@ export class DocumentosFiltros {
     return this;
   }
   /**
-   *Define la cantidad de elementos que serán ignorados antes de mostrar los 
+   *Define la cantidad de elementos que serán ignorados antes de mostrar los
    * resultados
    *
    * @param {number} skip
@@ -255,7 +263,9 @@ export class DocumentosFiltros {
     let cadena = [];
 
     if (this.termino.size > 0) {
-      cadena.push('termino=' + Array.from(this.termino).join(','));
+      cadena.push(
+        'termino=' + encodeURIComponent(Array.from(this.termino).join(','))
+      );
     }
     if (this.puntos.size > 0) {
       cadena.push('puntos=' + Array.from(this.puntos).join(','));

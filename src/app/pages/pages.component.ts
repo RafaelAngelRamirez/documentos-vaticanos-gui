@@ -36,6 +36,8 @@ export class PagesComponent implements OnInit {
 
     this.documentoService.buscar(filtros).subscribe(
       (docs) => {
+        //No es necesario obtener los documentos aqui
+        // por que se muestran en otro componente
         this.buscando = false;
         this.router.navigate(['documentos']);
       },

@@ -10,13 +10,10 @@ export class ResaltarTerminosPipe implements PipeTransform {
   transform(texto: string): unknown {
     if (!texto) return;
     let textoRemplazado = texto;
-
-    console.log(this.docService.filtros.terminos);
-
     this.docService.filtros.terminos.forEach((x) => {
       if (x) {
         // Si no esta vacio entra
-        let regex = new RegExp(x, 'gi');
+        let regex = new RegExp(x.toLowerCase(), 'i');
         textoRemplazado = textoRemplazado.replace(regex, '<mark>$&</mark>');
       }
     });

@@ -34,10 +34,14 @@
      descripcion
     =====================================
     -->
-    <div class="col-12 col-md-6">
+    <div *ngIf="datos.mostrarDescripcion" class="col-12 col-md-6">
       <div class="form-group">
         <small class="form-text text-muted">Descripción</small>
+
+        <div [innerHTML]="f('descripcion').value | resaltarTerminos"></div>
+
         <textarea
+          *ngIf="editando"
           autosize
           [onlyGrow]="true"
           [minRows]="3"

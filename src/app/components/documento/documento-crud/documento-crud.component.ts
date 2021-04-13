@@ -44,6 +44,8 @@ export class DocumentoCrudComponent implements OnInit {
   public set datos(value: Partial<Datos>) {
     this._datos = value;
     this.editando = value?.editando ?? false;
+    this._datos.mostrarDescripcion = value?.mostrarDescripcion ?? true;
+
     this.crearFormulario(value.documento);
   }
 
@@ -129,4 +131,6 @@ export class DocumentoCrudComponent implements OnInit {
 interface Datos {
   documento: Documento;
   editando: boolean;
+  mostrarDescripcion: boolean;
+  terminos: string[];
 }
