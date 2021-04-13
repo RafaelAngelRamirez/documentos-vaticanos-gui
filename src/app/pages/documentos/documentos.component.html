@@ -20,8 +20,7 @@
         <app-documento-crud
           [datos]="{
             documento: documento,
-            termino: documentoService.filtros.terminos,
-            editando:false
+            termino: documentoService.filtros.terminos
           }"
           (eliminado)="eliminado($event)"
           (guardado)="guardado($event)"
@@ -51,9 +50,7 @@
       <app-documento-crud
         [datos]="{
           documento: doc,
-          puntos: doc.puntos,
-          mostrarDescripcion: false,
-          editando: false
+          puntos: doc.puntos
         }"
         (eliminado)="eliminado($event)"
         (guardado)="guardado($event)"

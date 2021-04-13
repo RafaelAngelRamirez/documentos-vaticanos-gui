@@ -44,8 +44,7 @@ export class DocumentoCrudComponent implements OnInit {
   public set datos(value: Partial<Datos>) {
     this._datos = value;
     this.editando = value?.editando ?? false;
-    this._datos.mostrarDescripcion = value?.mostrarDescripcion ?? true;
-
+    if (value?.editando !== undefined) this.editando = value?.editando ?? false;
     this.crearFormulario(value.documento);
   }
 
@@ -79,20 +78,21 @@ export class DocumentoCrudComponent implements OnInit {
   }
 
   protocoloDetalle(editando: boolean) {
-    setTimeout(() => {
-      Array.from(
-        document.querySelectorAll(
-          `#${this.idGenerado} .documento-crud-elemento`
-        )
-      ).forEach((x) => {
-        if (editando) this.renderer.removeClass(x, 'mostrar-detalle');
-        else this.renderer.addClass(x, 'mostrar-detalle');
-      });
-    }, 50);
+    // setTimeout(() => {
+    //   Array.from(
+    //     document.querySelectorAll(
+    //       `#${this.idGenerado} .documento-crud-elemento`
+    //     )
+    //   ).forEach((x) => {
+    //     if (editando) this.renderer.removeClass(x, 'mostrar-detalle');
+    //     else this.renderer.addClass(x, 'mostrar-detalle');
+    //   });
+    // }, 50);
   }
 
   editar() {
     this.editando = !this.editando;
+    console.log('salio a editar', this.editando);
   }
 
   eliminar() {
