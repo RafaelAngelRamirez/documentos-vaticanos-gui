@@ -44,7 +44,6 @@
       <div class="form-group">
         <small class="form-text text-muted">Descripción</small>
 
-        {{editando}}
         <div
           *ngIf="!editando"
           [innerHTML]="f('descripcion').value | resaltarTerminos"
