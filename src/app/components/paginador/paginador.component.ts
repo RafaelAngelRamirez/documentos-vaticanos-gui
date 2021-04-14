@@ -11,7 +11,7 @@ export class PaginadorComponent implements OnInit {
    *
    * @memberof PaginadorComponent
    */
-  porPagina = [5, 15, 30, 50];
+  porPagina = [5, 10, 30];
 
   /**
    * Elementos por pagina seleccionado
