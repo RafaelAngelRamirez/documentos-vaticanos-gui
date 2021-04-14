@@ -1,0 +1,7 @@
+input {
+  border: none;
+}
+
+ul{display:table; text-align:center; margin:0 auto;}
+li{display:inline-block; text-align:center;}
+li.items_inside_li{display:inline-block; vertical-align:middle;}
