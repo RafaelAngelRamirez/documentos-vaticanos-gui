@@ -1,27 +1,27 @@
 <nav>
   <ul class="pagination">
     <li class="page-item">
-      <a (click)="cambiarPagina(-1)" class="page-link" href="javascript:void(0)">
+      <a
+        (click)="cambiarPagina(-1)"
+        class="page-link"
+        href="javascript:void(0)"
+      >
         <i class="fas fa-arrow-alt-circle-left"></i>
       </a>
     </li>
 
     <li class="m-3 m-3">
       Pagina
-      {{ paginaActual }} / {{ cantidadDePaginas[cantidadDePaginas.length - 1] }}
+      {{ dp.paginaActual }} / {{ dp.cantidadDePaginas }}
     </li>
     <li class="page-item">
-      <a
-        (click)="cambiarPagina(1)"
-        class="page-link"
-        href="javascript:void(0)"
-      >
+      <a (click)="cambiarPagina(1)" class="page-link" href="javascript:void(0)">
         <i class="fas fa-arrow-circle-right"></i>
       </a>
     </li>
     <li
-      *ngFor="let p of porPagina; let i = index"
-      [ngClass]="{ active: p === elementosPorPagina }"
+      *ngFor="let p of dp.porPagina; let i = index"
+      [ngClass]="{ active: p === dp.elementosPorPagina }"
       class="page-item"
       [title]="p + ' elementos por página'"
     >
@@ -30,6 +30,6 @@
       </a>
     </li>
 
-    <li class="m-3 m-3">{{ totalElementos }} en total</li>
+    <li class="m-3 m-3">{{ dp.totalElementos }} en total</li>
   </ul>
 </nav>

@@ -32,7 +32,9 @@ export class PagesComponent implements OnInit {
       .addOpciones('todosLosTerminosExactos')
       .addOpciones('todosLosTerminosParcial')
       .addOpciones('palabraParcial')
-      .addOpciones('palabraCompleta');
+      .addOpciones('palabraCompleta')
+      .setLimit(5)
+      .setSkip(0);
 
     this.documentoService.buscar(filtros).subscribe(
       (docs) => {

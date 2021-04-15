@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ModalService } from '@codice-progressio/modal';
 import { Documento } from '../../models/documento.model';
 import { DocumentosBusqueda } from '../../services/documento.service';
+import { Paginacion } from '../../components/paginador/paginador.component';
 import {
   DocumentoService,
   DocumentosFiltros,
@@ -28,9 +29,17 @@ export class DocumentosComponent implements OnInit {
   ngOnInit(): void {
     // Si en el servicio alguna de las operaciones arroja algún
     // resultado nos suscribimos automaticamente.
-    this.documentoService.documentosBusqueda.subscribe((x) => {
-      this.documentos = x.documentos;
-      this.documentosBusqueda = x;
+
+    this.documentosBusqueda = {} as DocumentosBusqueda;
+    this.documentoService.documentosBusqueda.subscribe((busqueda) => {
+      this.documentosBusqueda.documentos = busqueda.documentos;
+      this.clavesResultadoBusqueda.forEach((clave) => {
+        if (busqueda[clave.key]) {
+          this.documentosBusqueda[clave.key] = busqueda[clave.key];
+          this.documentosBusqueda[clave.key + '_total'] =
+            busqueda[clave.key + '_total'];
+        }
+      });
     });
     // Si no hay documentos cargamos
     if (this.documentos === undefined || this.documentos?.length === 0) {
@@ -95,4 +104,18 @@ export class DocumentosComponent implements OnInit {
     },
   ];
 
+  cargarDocumentosConPaginacion(paginacion: Paginacion, key) {
+    //Modificamos los filtros globales.
+    this.documentoService.filtros
+      .setLimit(paginacion.limit)
+      .setSkip(paginacion.skip);
+
+    this.cargando = true;
+    this.documentoService.buscar(this.documentoService.filtros).subscribe(
+      () => {
+        this.cargando = false;
+      },
+      () => (this.cargando = false)
+    );
+  }
 }

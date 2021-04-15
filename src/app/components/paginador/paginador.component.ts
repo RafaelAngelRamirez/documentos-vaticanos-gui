@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { PaginadorService, DatosPaginador } from '../paginador.service';
 
 @Component({
   selector: 'app-paginador',
@@ -6,36 +7,22 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
   styleUrls: ['./paginador.component.css'],
 })
 export class PaginadorComponent implements OnInit {
+  constructor(public ps: PaginadorService) {}
   /**
-   *Elementos a mostrar por página
+   *Datos de paginacion obtenidos del servicio
    *
+   * @type {Datos}
    * @memberof PaginadorComponent
    */
-  porPagina = [5, 10, 30];
+  dp: DatosPaginador;
 
-  /**
-   * Elementos por pagina seleccionado
-   *
-   * @memberof PaginadorComponent
-   */
-  elementosPorPagina = this.porPagina[0];
-
-  /**
-   * Pagina actual donde nos encontramos
-   *
-   * @memberof PaginadorComponent
-   */
-  paginaActual = 1;
-
-  /**
-   *Calculo de los elementos a saltar según la pagina actual y los elementos escogidos
-   *
-   * @private
-   * @memberof PaginadorComponent
-   */
-  private skip = () => (this.paginaActual - 1) * this.elementosPorPagina;
-
-  constructor() {}
+  id: string = '';
+  @Input()
+  public set datos(value: Datos) {
+    this.dp = this.ps.registro(value.id);
+    this.calcularCantidaDePaginas(value.totalElementos);
+    if (value.porPagina) this.dp.porPagina = value.porPagina;
+  }
 
   /**
    *Los datos resultado de los cambios echos.
@@ -44,32 +31,18 @@ export class PaginadorComponent implements OnInit {
    */
   @Output() pagina = new EventEmitter<Paginacion>();
 
-  private _totalElementos = 0;
-  public get totalElementos() {
-    return this._totalElementos;
-  }
-  @Input()
-  public set totalElementos(value) {
-    this._totalElementos = value;
-    this.calcularCantidaDePaginas(value);
-  }
-
   calcularCantidaDePaginas(totalDeElementos: number) {
     if (totalDeElementos > 0) {
       let totalDePaginas = Math.ceil(
-        totalDeElementos / this.elementosPorPagina
+        totalDeElementos / this.dp.elementosPorPagina
       );
-
-      let contador = 0;
-      this.cantidadDePaginas = Array.from(new Array(totalDePaginas)).map(
-        (x) => ++contador
-      );
-
-      this.paginaActual = 1;
+      console.log(this.dp.cantidadDePaginas);
+      this.dp.cantidadDePaginas = totalDePaginas;
+      console.log(this.dp.cantidadDePaginas);
+      // Evitamos emitir para que solo se recalcule la pagina
+      this.cambiarPagina(0, false);
     }
   }
-
-  cantidadDePaginas = [];
 
   ngOnInit(): void {}
 
@@ -79,18 +52,15 @@ export class PaginadorComponent implements OnInit {
    * @param {number} i
    * @memberof PaginadorComponent
    */
-  cambiarPagina(i: number) {
-    this.paginaActual += i;
+  cambiarPagina(i: number, emitir = true) {
+    this.dp.paginaActual += i;
 
-    if (this.paginaActual < 1) this.paginaActual = 1;
+    if (this.dp.paginaActual < 1) this.dp.paginaActual = 1;
 
-    const ultimaPagina = this.cantidadDePaginas[
-      this.cantidadDePaginas.length - 1
-    ];
+    if (this.dp.paginaActual > this.dp.cantidadDePaginas)
+      this.dp.paginaActual = this.dp.cantidadDePaginas;
 
-    if (this.paginaActual > ultimaPagina) this.paginaActual = ultimaPagina;
-
-    this.pagina.emit(this.generar());
+    if (emitir) this.pagina.emit(this.generar());
   }
 
   /**
@@ -100,17 +70,27 @@ export class PaginadorComponent implements OnInit {
    * @memberof PaginadorComponent
    */
   cambiarLimite(i: number) {
-    this.elementosPorPagina = this.porPagina[i];
-    this.calcularCantidaDePaginas(this.totalElementos);
+    this.dp.elementosPorPagina = this.dp.porPagina[i];
+    this.calcularCantidaDePaginas(this.dp.totalElementos);
     this.pagina.emit(this.generar());
   }
 
   generar() {
-    return { limit: this.elementosPorPagina, skip: this.skip() };
+    return {
+      limit: this.dp.elementosPorPagina,
+      skip: this.dp.skip() + this.dp.elementosPorPagina,
+    };
   }
 }
 
 export interface Paginacion {
   limit: number;
   skip: number;
+}
+
+interface Datos {
+  porPagina: number[];
+  totalElementos: number;
+  // Id que identifique el paginador
+  id: string;
 }

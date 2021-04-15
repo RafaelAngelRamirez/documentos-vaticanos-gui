@@ -35,6 +35,7 @@ export class DocumentoService {
 
   buscar(filtros: DocumentosFiltros) {
     this.filtros = filtros;
+    console.log(filtros)
     return this.http
       .get<DocumentosBusqueda>(this.base.concat(filtros.obtenerFiltros()))
       .pipe(
