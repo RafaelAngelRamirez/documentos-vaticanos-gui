@@ -13,8 +13,10 @@ export class PaginadorService {
    * @memberof PaginadorService
    */
   registro(id: string): DatosPaginador {
+    console.log(this.registrados)
     if (!id) throw 'Debes definir un id';
     let datos = this.registrados.find((x) => x.id === id);
+    console.log({datosEncontrados:datos})
     if (datos) return datos;
     else {
       let d = new DatosPaginador();
@@ -28,6 +30,7 @@ export class PaginadorService {
 
 @Directive()
 export class DatosPaginador {
+  cargando = false
   /**
    *El id con el que esta registrado el pagiandor
    *
