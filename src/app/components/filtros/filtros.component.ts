@@ -26,7 +26,7 @@ export class FiltrosComponent implements OnInit {
   opciones: Opcion[] = [
     {
       descripcion: 'Todos los términos exactos',
-      opcion: Opciones.palabraCompleta,
+      opcion: Opciones.todosLosTerminosExactos,
       seleccionado: true,
     },
     {

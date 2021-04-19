@@ -36,7 +36,7 @@ export class DocumentoService {
   buscar(filtros: DocumentosFiltros, key: string = '') {
     if (!key) {
       this.filtros = filtros;
-    console.log({ filtros });
+    }
 
     // Eliminamos las opciones que ya no esten
 
