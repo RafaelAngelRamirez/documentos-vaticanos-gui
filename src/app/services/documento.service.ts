@@ -35,7 +35,7 @@ export class DocumentoService {
 
   buscar(filtros: DocumentosFiltros) {
     this.filtros = filtros;
-    console.log(filtros)
+    console.log({ filtros });
     return this.http
       .get<DocumentosBusqueda>(this.base.concat(filtros.obtenerFiltros()))
       .pipe(
@@ -65,8 +65,6 @@ export class DocumentoService {
     let url = this.base
       .concat(`/id/${idDocumento}/punto/`)
       .concat(idPunto ? `${idPunto}` : '');
-
-    console.log(url);
 
     return this.http.get<Punto[]>(url);
   }
@@ -144,15 +142,15 @@ class IndiceService {
 
 export interface DocumentosBusqueda {
   documentos: Documento[];
-  documentos_total: {total:number}[];
+  documentos_total: number;
   todosLosTerminosExactos: Documento[];
-  todosLosTerminosExactos_total: {total:number}[];
+  todosLosTerminosExactos_total: number;
   todosLosTerminosParcial: Documento[];
-  todosLosTerminosParcial_total: {total:number}[];
+  todosLosTerminosParcial_total: number;
   palabraCompleta: Documento[];
-  palabraCompleta_total: {total:number}[];
+  palabraCompleta_total: number;
   palabraParcial: Documento[];
-  palabraParcial_total: {total:number}[];
+  palabraParcial_total: number;
 }
 
 export class DocumentosFiltros {

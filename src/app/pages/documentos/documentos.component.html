@@ -45,7 +45,7 @@
       class="col-12 mb-3 fade-in"
     >
       <app-paginador
-        (pagina)="cargarDocumentosConPaginacion($event)"
+        (pagina)="cargarDocumentosConPaginacion($event, clave.key)"
         [datos]="{
           id: clave.key,
           totalElementos: documentosBusqueda[clave.key + '_total']

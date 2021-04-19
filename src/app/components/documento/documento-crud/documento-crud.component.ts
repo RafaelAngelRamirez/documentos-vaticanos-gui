@@ -92,7 +92,6 @@ export class DocumentoCrudComponent implements OnInit {
 
   editar() {
     this.editando = !this.editando;
-    console.log('salio a editar', this.editando);
   }
 
   eliminar() {

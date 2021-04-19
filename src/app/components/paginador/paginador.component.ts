@@ -19,8 +19,8 @@ export class PaginadorComponent implements OnInit {
   id: string = '';
   @Input()
   public set datos(value: Datos) {
-    console.log({value})
-    this.dp = this.ps.registro(value.id);
+    this.id = value.id;
+    this.dp = this.ps.registro(this.id);
     this.calcularCantidaDePaginas(value.totalElementos);
     if (value.porPagina) this.dp.porPagina = value.porPagina;
   }
@@ -37,10 +37,7 @@ export class PaginadorComponent implements OnInit {
       let totalDePaginas = Math.ceil(
         totalDeElementos / this.dp.elementosPorPagina
       );
-      console.log({totalDePaginas})
-      console.log(this.dp.cantidadDePaginas);
       this.dp.cantidadDePaginas = totalDePaginas;
-      console.log(this.dp.cantidadDePaginas);
       // Evitamos emitir para que solo se recalcule la pagina
       this.cambiarPagina(0, false);
     }
@@ -55,7 +52,6 @@ export class PaginadorComponent implements OnInit {
    * @memberof PaginadorComponent
    */
   cambiarPagina(i: number, emitir = true) {
-    console.log(this.id)
     if (this.dp.cargando) return;
     this.dp.paginaActual += i;
 
@@ -83,7 +79,7 @@ export class PaginadorComponent implements OnInit {
   generar() {
     return {
       limit: this.dp.elementosPorPagina,
-      skip: this.dp.skip() + this.dp.elementosPorPagina,
+      skip: this.dp.skip(),
     };
   }
 }

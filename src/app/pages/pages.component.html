@@ -14,6 +14,7 @@
     >
       <span class="navbar-toggler-icon"></span>
     </button>
+
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <!-- <li class="nav-item">
@@ -37,6 +38,8 @@
             <li><a class="dropdown-item" href="#">Something else here</a></li>
           </ul>
         </li> -->
+        </li>
+
         <li class="nav-item">
           <a class="nav-link" [routerLink]="['documentos']" tabindex="-1">
             <i class="fas fa-list"></i>
@@ -44,24 +47,9 @@
           >
         </li>
       </ul>
-      <span class="mr-3 text-center" style="width: 50px">
-        <i *ngIf="!buscando" class="fas fa-search"></i>
-        <i *ngIf="buscando" class="fas fa-sync fa-spin"></i>
-      </span>
-
-      <div class="d-flex">
-        <input
-          #inputBuscador
-          (keyup.enter)="buscador(inputBuscador.value)"
-          class="form-control me-2"
-          type="search"
-          placeholder="Buscar documento"
-          aria-label="Buscar"
-          [disabled]="buscando"
-        />
-      </div>
     </div>
   </div>
+  <app-filtros></app-filtros>
 </nav>
 
 <div class="container mt-3">

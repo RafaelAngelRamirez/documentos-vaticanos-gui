@@ -8,6 +8,8 @@ import { PuntoCrudComponent } from './documento/punto-crud/punto-crud.component'
 import { ReferenciaCrudComponent } from './documento/referencia-crud/referencia-crud.component';
 import { PipesModule } from '../pipes/pipes.module';
 import { PaginadorComponent } from './paginador/paginador.component';
+import { FiltrosComponent } from './filtros/filtros.component';
+import { ModalModule } from '@codice-progressio/modal'
 
 @NgModule({
   declarations: [
@@ -15,6 +17,7 @@ import { PaginadorComponent } from './paginador/paginador.component';
     PuntoCrudComponent,
     ReferenciaCrudComponent,
     PaginadorComponent,
+    FiltrosComponent,
   ],
   imports: [
     CommonModule,
@@ -23,12 +26,14 @@ import { PaginadorComponent } from './paginador/paginador.component';
     InputValidacionesModule,
     AutosizeModule,
     PipesModule,
+    ModalModule
   ],
   exports: [
     DocumentoCrudComponent,
     PuntoCrudComponent,
     ReferenciaCrudComponent,
     PaginadorComponent,
+    FiltrosComponent,
   ],
 })
 export class ComponentsModule {}

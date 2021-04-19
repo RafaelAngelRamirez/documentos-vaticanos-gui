@@ -8,6 +8,7 @@ import {
   DocumentoService,
   DocumentosFiltros,
 } from '../../services/documento.service';
+import { PaginadorService } from 'src/app/components/paginador.service';
 
 @Component({
   selector: 'app-documentos',
@@ -16,7 +17,7 @@ import {
 })
 export class DocumentosComponent implements OnInit {
   constructor(
-    private router: Router,
+    private paginadorService: PaginadorService,
     public documentoService: DocumentoService,
     private modalService: ModalService
   ) {}
@@ -104,18 +105,16 @@ export class DocumentosComponent implements OnInit {
     },
   ];
 
-  cargarDocumentosConPaginacion(paginacion: Paginacion, key) {
+  cargarDocumentosConPaginacion(paginacion: Paginacion, key:any) {
     //Modificamos los filtros globales.
     this.documentoService.filtros
       .setLimit(paginacion.limit)
       .setSkip(paginacion.skip);
 
-    this.cargando = true;
+    this.paginadorService.registro(key).cargando = true;
     this.documentoService.buscar(this.documentoService.filtros).subscribe(
-      () => {
-        this.cargando = false;
-      },
-      () => (this.cargando = false)
+      () => (this.paginadorService.registro(key).cargando = false),
+      () => (this.paginadorService.registro(key).cargando = false)
     );
   }
 }

@@ -13,10 +13,7 @@
       </a>
     </li>
 
-    <li class="m-3 m-3">
-      Pagina
-      {{ dp.paginaActual }} / {{ dp.cantidadDePaginas }}
-    </li>
+    <li class="m-3 m-3">{{ dp.paginaActual }} / {{ dp.cantidadDePaginas }}</li>
     <li class="page-item">
       <a (click)="cambiarPagina(1)" class="page-link" href="javascript:void(0)">
         <i
