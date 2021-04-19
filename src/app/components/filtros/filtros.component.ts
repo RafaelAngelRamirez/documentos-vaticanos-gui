@@ -1,7 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalService } from '@codice-progressio/modal';
-import { DocumentosFiltros } from 'src/app/services/documento.service';
+import {
+  DocumentosFiltros,
+  Opciones,
+} from 'src/app/services/documento.service';
 import { DocumentoService } from '../../services/documento.service';
 
 @Component({
@@ -23,22 +26,22 @@ export class FiltrosComponent implements OnInit {
   opciones: Opcion[] = [
     {
       descripcion: 'Todos los términos exactos',
-      opcion: 'todosLosTerminosExactos',
+      opcion: Opciones.palabraCompleta,
       seleccionado: true,
     },
     {
       descripcion: 'Todos los terminos de manera parcial',
-      opcion: 'todosLosTerminosParcial',
+      opcion: Opciones.todosLosTerminosParcial,
       seleccionado: false,
     },
     {
       descripcion: 'Palabra parcial',
-      opcion: 'palabraParcial',
+      opcion: Opciones.palabraParcial,
       seleccionado: false,
     },
     {
       descripcion: 'Palabra completa',
-      opcion: 'palabraCompleta',
+      opcion: Opciones.palabraCompleta,
       seleccionado: false,
     },
   ];
@@ -72,12 +75,7 @@ export class FiltrosComponent implements OnInit {
 }
 
 interface Opcion {
-  opcion:
-    | 'todosLosTerminosExactos'
-    | 'todosLosTerminosParcial'
-    | 'palabraParcial'
-    | 'palabraCompleta';
-
+  opcion: Opciones;
   descripcion: string;
   seleccionado: boolean;
 }

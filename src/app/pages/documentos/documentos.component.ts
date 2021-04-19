@@ -105,14 +105,14 @@ export class DocumentosComponent implements OnInit {
     },
   ];
 
-  cargarDocumentosConPaginacion(paginacion: Paginacion, key:any) {
+  cargarDocumentosConPaginacion(paginacion: Paginacion, key: any) {
     //Modificamos los filtros globales.
     this.documentoService.filtros
       .setLimit(paginacion.limit)
       .setSkip(paginacion.skip);
 
     this.paginadorService.registro(key).cargando = true;
-    this.documentoService.buscar(this.documentoService.filtros).subscribe(
+    this.documentoService.buscar(this.documentoService.filtros, key).subscribe(
       () => (this.paginadorService.registro(key).cargando = false),
       () => (this.paginadorService.registro(key).cargando = false)
     );

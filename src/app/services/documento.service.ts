@@ -33,15 +33,26 @@ export class DocumentoService {
     this.indice = new IndiceService(this);
   }
 
-  buscar(filtros: DocumentosFiltros) {
-    this.filtros = filtros;
+  buscar(filtros: DocumentosFiltros, key: string = '') {
+    if (!key) {
+      this.filtros = filtros;
     console.log({ filtros });
+
+    // Eliminamos las opciones que ya no esten
+
     return this.http
       .get<DocumentosBusqueda>(this.base.concat(filtros.obtenerFiltros()))
       .pipe(
         map((r) => {
-          this._resultadoBusquedaDocumentos = r;
-          this.documentosBusqueda.next(r);
+          if (key) {
+            this._resultadoBusquedaDocumentos[key] = r[key];
+            this._resultadoBusquedaDocumentos[key + '_total'] =
+              r[key + '_total'];
+            this.documentosBusqueda.next(this._resultadoBusquedaDocumentos);
+          } else {
+            this._resultadoBusquedaDocumentos = r;
+            this.documentosBusqueda.next(r);
+          }
           return r;
         })
       );
@@ -156,11 +167,11 @@ export interface DocumentosBusqueda {
 export class DocumentosFiltros {
   private termino = new Set<string>();
   private puntos = new Set<string>();
-  private opciones = new Set<string>();
+  private opciones = new Set<Opciones>();
 
   private documentos = new Set<string>();
-  private limit: number = 30;
-  private skip: number = 0;
+  private _limit: number = 30;
+  private _skip: number = 0;
 
   constructor() {}
 
@@ -198,21 +209,17 @@ export class DocumentosFiltros {
   /**
    * Opciones para la busqueda
    *
-   * @param {('todosLosTerminosExactos'
-   *       | 'todosLosTerminosParcial'
-   *       | 'palabraCompleta'
-   *       | 'palabraParcial')} opcion
+   * @param {Opciones} opcion
    * @returns
    * @memberof DocumentosFiltros
    */
-  addOpciones(
-    opcion:
-      | 'todosLosTerminosExactos'
-      | 'todosLosTerminosParcial'
-      | 'palabraCompleta'
-      | 'palabraParcial'
-  ) {
+  addOpciones(opcion: Opciones) {
     this.opciones.add(opcion);
+    return this;
+  }
+
+  deleteOpciones(opcion: Opciones) {
+    this.opciones.delete(opcion);
     return this;
   }
 
@@ -236,9 +243,17 @@ export class DocumentosFiltros {
    * @memberof DocumentosFiltros
    */
   setLimit(limit: number) {
-    this.limit = limit;
+    this._limit = limit;
     return this;
   }
+
+  get limit() {
+    return this._limit;
+  }
+  get skip() {
+    return this._skip;
+  }
+
   /**
    *Define la cantidad de elementos que serán ignorados antes de mostrar los
    * resultados
@@ -248,7 +263,7 @@ export class DocumentosFiltros {
    * @memberof DocumentosFiltros
    */
   setSkip(skip: number) {
-    this.skip = skip;
+    this._skip = skip;
     return this;
   }
 
@@ -277,9 +292,16 @@ export class DocumentosFiltros {
       cadena.push('documentos=' + Array.from(this.documentos).join(','));
     }
 
-    cadena.push('limit=' + this.limit);
-    cadena.push('skip=' + this.skip);
+    cadena.push('limit=' + this._limit);
+    cadena.push('skip=' + this._skip);
 
     return '?' + cadena.join('&');
   }
+}
+
+export const enum Opciones {
+  todosLosTerminosExactos = 'todosLosTerminosExactos',
+  todosLosTerminosParcial = 'todosLosTerminosParcial',
+  palabraCompleta = 'palabraCompleta',
+  palabraParcial = 'palabraParcial',
 }
