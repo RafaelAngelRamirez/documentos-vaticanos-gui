@@ -123,4 +123,17 @@ export class DocumentosComponent implements OnInit {
       () => (this.paginadorService.registro(key).cargando = false)
     );
   }
+
+  /**
+   *Si los filtros tienen definido esta key, se muestra
+   los datos
+   *
+   * @param {Opciones} key
+   * @returnsK bolean
+   * @memberof DocumentosComponent
+   */
+  estaEnFiltros(key: Opciones) {
+    let a = this.documentoService.filtros.opciones;
+    return a.includes(key);
+  }
 }

@@ -43,7 +43,7 @@ export class DocumentoService {
       .get<DocumentosBusqueda>(this.base.concat(filtros.obtenerFiltros()))
       .pipe(
         map((r) => {
-          console.log({r})
+          console.log({ r });
           if (key) {
             this._resultadoBusquedaDocumentos[key] = r[key];
             this._resultadoBusquedaDocumentos[key + '_total'] =
@@ -167,7 +167,7 @@ export interface DocumentosBusqueda {
 export class DocumentosFiltros {
   private termino = new Set<string>();
   private puntos = new Set<string>();
-  private opciones = new Set<Opciones>();
+  private _opciones = new Set<Opciones>();
 
   private documentos = new Set<string>();
   private _limit: number = 30;
@@ -214,13 +214,17 @@ export class DocumentosFiltros {
    * @memberof DocumentosFiltros
    */
   addOpciones(opcion: Opciones) {
-    this.opciones.add(opcion);
+    this._opciones.add(opcion);
     return this;
   }
 
   deleteOpciones(opcion: Opciones) {
-    this.opciones.delete(opcion);
+    this._opciones.delete(opcion);
     return this;
+  }
+
+  get opciones():string[] {
+    return Array.from(this._opciones);
   }
 
   /**
@@ -285,8 +289,8 @@ export class DocumentosFiltros {
       cadena.push('puntos=' + Array.from(this.puntos).join(','));
     }
 
-    if (this.opciones.size > 0) {
-      cadena.push('opciones=' + Array.from(this.opciones).join(','));
+    if (this._opciones.size > 0) {
+      cadena.push('opciones=' + Array.from(this._opciones).join(','));
     }
     if (this.documentos.size > 0) {
       cadena.push('documentos=' + Array.from(this.documentos).join(','));

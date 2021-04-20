@@ -32,51 +32,52 @@
   </div>
 </div>
 
-<div *ngFor="let clave of clavesResultadoBusqueda" class="row">
-  <div class="col-12">
-    <h5>{{ clave.titulo }}</h5>
-    <p class="text-muted">
-      {{ clave.descripcion }}
-    </p>
-    <hr />
+<ng-container *ngFor="let clave of clavesResultadoBusqueda">
+  <div *ngIf="estaEnFiltros(clave.key)" class="row">
+    <div class="col-12">
+      <h5>{{ clave.titulo }}</h5>
+      <p class="text-muted">
+        {{ clave.descripcion }}
+      </p>
+      <hr />
 
-    <div
-      *ngFor="let doc of documentosBusqueda[clave.key]"
-      class="col-12 mb-3 fade-in"
-    >
-      <app-paginador
-        (pagina)="cargarDocumentosConPaginacion($event, clave.key)"
-        [datos]="{
-          id: clave.key,
-          totalElementos: documentosBusqueda[clave.key + '_total']
-        }"
-      ></app-paginador>
-
-      <app-documento-crud
-        [datos]="{
-          documento: doc,
-          puntos: doc.puntos
-        }"
-        (eliminado)="eliminado($event)"
-        (guardado)="guardado($event)"
+      <div
+        *ngFor="let doc of documentosBusqueda[clave.key]"
+        class="col-12 mb-3 fade-in"
       >
-      </app-documento-crud>
+        <app-paginador
+          (pagina)="cargarDocumentosConPaginacion($event, clave.key)"
+          [datos]="{
+            id: clave.key,
+            totalElementos: documentosBusqueda[clave.key + '_total']
+          }"
+        ></app-paginador>
 
-      <hr />
+        <app-documento-crud
+          [datos]="{
+            documento: doc,
+            puntos: doc.puntos
+          }"
+          (eliminado)="eliminado($event)"
+          (guardado)="guardado($event)"
+        >
+        </app-documento-crud>
 
-      <app-punto-crud
-        *ngFor="let punto of doc.puntos"
-        [datos]="{
-          documento: doc,
-          punto: punto
-        }"
-      ></app-punto-crud>
+        <hr />
 
-      <hr />
+        <app-punto-crud
+          *ngFor="let punto of doc.puntos"
+          [datos]="{
+            documento: doc,
+            punto: punto
+          }"
+        ></app-punto-crud>
+
+        <hr />
+      </div>
     </div>
   </div>
-</div>
-
+</ng-container>
 <codice-modal [id]="idModalCrear">
   <div class="row">
     <div class="col-12">
