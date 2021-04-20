@@ -39,11 +39,11 @@ export class DocumentoService {
     }
 
     // Eliminamos las opciones que ya no esten
-
     return this.http
       .get<DocumentosBusqueda>(this.base.concat(filtros.obtenerFiltros()))
       .pipe(
         map((r) => {
+          console.log({r})
           if (key) {
             this._resultadoBusquedaDocumentos[key] = r[key];
             this._resultadoBusquedaDocumentos[key + '_total'] =
@@ -304,4 +304,5 @@ export const enum Opciones {
   todosLosTerminosParcial = 'todosLosTerminosParcial',
   palabraCompleta = 'palabraCompleta',
   palabraParcial = 'palabraParcial',
+  puntos = 'puntos',
 }

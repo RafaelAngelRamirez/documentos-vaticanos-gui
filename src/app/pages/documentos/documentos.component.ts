@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalService } from '@codice-progressio/modal';
 import { Documento } from '../../models/documento.model';
-import { DocumentosBusqueda } from '../../services/documento.service';
+import { DocumentosBusqueda, Opciones } from '../../services/documento.service';
 import { Paginacion } from '../../components/paginador/paginador.component';
 import {
   DocumentoService,
@@ -82,26 +82,32 @@ export class DocumentosComponent implements OnInit {
 
   clavesResultadoBusqueda = [
     {
-      key: 'todosLosTerminosExactos',
+      key: Opciones.todosLosTerminosExactos,
       titulo: 'Todos los terminos exactos',
       descripcion:
         'Deben existir todos los terminos de manera exacta en cada punto para mostrar coincidencia',
     },
     {
-      key: 'todosLosTerminosParcial',
+      key: Opciones.todosLosTerminosParcial,
       titulo: 'Todos los terminos de manera parcial',
       descripcion:
         'Busca el termino de manera paracial y deben existir todas las coincidencias en el punto para mostrarlo.',
     },
     {
-      key: 'palabraCompleta',
+      key: Opciones.palabraCompleta,
       titulo: 'Palabra completa',
       descripcion: 'Busca la palabra completa en cada punto.',
     },
     {
-      key: 'palabraParcial',
+      key: Opciones.palabraParcial,
       titulo: 'Palabra parcial',
       descripcion: 'Busca los terminos de manera parcial en cada punto',
+    },
+    {
+      key: Opciones.puntos,
+      titulo: 'Coincidencia en puntos',
+      descripcion:
+        'Busca los puntos que que coincidan con el formato. Puede ser "21, 23-30"',
     },
   ];
 

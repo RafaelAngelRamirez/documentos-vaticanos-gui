@@ -44,6 +44,11 @@ export class FiltrosComponent implements OnInit {
       opcion: Opciones.palabraCompleta,
       seleccionado: false,
     },
+    {
+      descripcion: 'Puntos (Busqueda por puntos)',
+      opcion: Opciones.puntos,
+      seleccionado: false,
+    },
   ];
 
   buscador(termino: string) {
@@ -52,7 +57,13 @@ export class FiltrosComponent implements OnInit {
     this.buscando = true;
 
     let filtros = new DocumentosFiltros();
-    filtros.addTermino(termino).setLimit(5).setSkip(0);
+
+    let esPunto = this.opciones.find((x) => x.opcion === Opciones.puntos);
+
+    if (esPunto) filtros.addPunto(termino);
+    filtros.addTermino(termino);
+
+    filtros.setLimit(5).setSkip(0);
 
     this.opciones.forEach((x) => {
       if (x.seleccionado) filtros.addOpciones(x.opcion);
