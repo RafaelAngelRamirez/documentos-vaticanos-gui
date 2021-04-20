@@ -21,6 +21,7 @@ export class PaginadorComponent implements OnInit {
   public set datos(value: Datos) {
     this.id = value.id;
     this.dp = this.ps.registro(this.id);
+    this.dp.totalElementos = value.totalElementos;
     this.calcularCantidaDePaginas(value.totalElementos);
     if (value.porPagina) this.dp.porPagina = value.porPagina;
   }

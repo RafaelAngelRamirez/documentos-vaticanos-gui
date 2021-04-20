@@ -43,7 +43,6 @@ export class DocumentoService {
       .get<DocumentosBusqueda>(this.base.concat(filtros.obtenerFiltros()))
       .pipe(
         map((r) => {
-          console.log({ r });
           if (key) {
             this._resultadoBusquedaDocumentos[key] = r[key];
             this._resultadoBusquedaDocumentos[key + '_total'] =
@@ -223,7 +222,7 @@ export class DocumentosFiltros {
     return this;
   }
 
-  get opciones():string[] {
+  get opciones(): string[] {
     return Array.from(this._opciones);
   }
 

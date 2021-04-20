@@ -59,10 +59,7 @@ export class DatosPaginador {
 
   cantidadDePaginas = 0;
 
-  private _totalElementos = 0;
-  public get totalElementos() {
-    return this._totalElementos;
-  }
+  totalElementos: number = 0;
 
   /**
    *Calculo de los elementos a saltar según la pagina actual y los elementos escogidos
