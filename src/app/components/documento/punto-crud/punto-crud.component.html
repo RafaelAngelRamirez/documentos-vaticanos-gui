@@ -12,7 +12,7 @@
         </div>
 
         <a
-          *ngIf="datos?.punto?.referencias?.length > 0"
+          *ngIf="datos?.punto?.referencias?.length > 0 || '' | tienePermiso"
           title="Mostrar referencias de este punto"
           href="javascript:void(0)"
           class="text-muted"
@@ -119,8 +119,11 @@
         </ng-container>
       </div>
     </ng-container>
-
+    
     <div class="col-12">
+      <br>
+    </div>
+    <div *ngIf="'' | tienePermiso" class="col-12">
       <a
         *ngIf="!editando"
         (click)="editar()"
