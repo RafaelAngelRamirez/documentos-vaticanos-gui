@@ -74,7 +74,7 @@
 
     <div class="col-12 col-md-2">
       <a
-        *ngIf="!editando"
+        *ngIf="!editando || '' | tienePermiso"
         (click)="editar()"
         class="btn ms-1 btn-outline-primary"
         href="javascript:void(0)"
@@ -84,7 +84,7 @@
       ></a>
 
       <a
-        *ngIf="editando"
+        *ngIf="editando || '' | tienePermiso"
         (click)="guardar(formulario.value, formulario.invalid)"
         class="btn ms-1 btn-outline-success"
         href="javascript:void(0)"
@@ -93,7 +93,7 @@
         <i *ngIf="!cargando; else sync" class="fas fa-save"></i
       ></a>
       <a
-        *ngIf="this.datos?.documento?._id"
+        *ngIf="this.datos?.documento?._id || '' | tienePermiso"
         (click)="eliminar()"
         class="btn ms-1 btn-outline-danger"
         href="javascript:void(0)"

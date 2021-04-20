@@ -10,6 +10,7 @@
     {{ f("descripcion").value }}
   </span>
   <a
+    *ngIf="'' | tienePermiso"
     (click)="editando = !editando"
     class="text-info"
     href="javascript:void(0)"
@@ -23,8 +24,7 @@
   <hr />
   <div class="col-12">
     <form *ngIf="formulario" [formGroup]="formulario">
-
-    <input type="hidden" formControlName="_id">
+      <input type="hidden" formControlName="_id" />
       <div class="row">
         <!-- 
       =====================================

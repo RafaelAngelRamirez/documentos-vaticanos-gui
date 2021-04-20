@@ -7,6 +7,7 @@ import { TableroComponent } from './tablero/tablero.component';
 import { ComponentsModule } from '../components/components.module';
 import { DocumentoVisorComponent } from './documento-visor/documento-visor.component';
 import { ModalModule } from '@codice-progressio/modal';
+import { PipesModule } from '../pipes/pipes.module';
 
 const routes: Routes = [
   { path: 'tablero', component: TableroComponent },
@@ -38,6 +39,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     ComponentsModule,
     ModalModule,
+    PipesModule
   ],
 })
 export class PagesModule {}

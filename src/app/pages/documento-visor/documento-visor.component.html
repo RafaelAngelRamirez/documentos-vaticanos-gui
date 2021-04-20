@@ -3,6 +3,7 @@
     <h1>
       {{ documento?.nombre }}
       <a
+        *ngIf="'' | tienePermiso"
         (click)="agregarPunto()"
         class="btn btn-primary"
         href="javascript:void(0)"
