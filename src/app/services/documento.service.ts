@@ -89,6 +89,10 @@ class PuntoService {
     this.referencia = new ReferenciaService(root);
   }
 
+  revisado(documento: DocumentoSimple) {
+    return this.root.http.put(this.base.concat('revisado'), documento);
+  }
+
   nuevo(documento: DocumentoSimple) {
     delete documento.punto._id;
     return this.root.http.put<Documento>(this.base.concat('nuevo'), documento);

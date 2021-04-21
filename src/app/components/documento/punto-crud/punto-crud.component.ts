@@ -176,12 +176,31 @@ export class PuntoCrudComponent implements OnInit {
       _id: null,
       descripcion: 'NUEVA REFERENCIA',
     };
-    if(!this.datos.punto.referencias) this.datos.punto.referencias = []
+    if (!this.datos.punto.referencias) this.datos.punto.referencias = [];
     this.datos.punto.referencias.push(r as Referencia);
   }
 
   eliminarReferencia(i: number) {
     this.datos.punto.referencias.splice(i, 1);
+  }
+
+  revisado() {
+    let doc: DocumentoSimple = {
+      _id: this.datos.documento._id,
+      punto: {
+        _id: this.datos.punto._id,
+        revisado: !this.datos.punto.revisado,
+      },
+    };
+
+    this.cargando = true;
+    this.docService.punto.revisado(doc).subscribe(
+      () => {
+        this.datos.punto.revisado = doc.punto.revisado;
+        this.cargando = false;
+      },
+      () => (this.cargando = false)
+    );
   }
 }
 

@@ -119,9 +119,9 @@
         </ng-container>
       </div>
     </ng-container>
-    
+
     <div class="col-12">
-      <br>
+      <br />
     </div>
     <div *ngIf="'' | tienePermiso" class="col-12">
       <a
@@ -159,6 +159,20 @@
       >
         <i *ngIf="!cargando; else sync" class="fas fa-plus-circle"></i> REF</a
       >
+      <a
+        (click)="revisado()"
+        class="btn ms-1 btn-outline-secondary"
+        href="javascript:void(0)"
+        role="button"
+      >
+        <ng-container *ngIf="!cargando; else sync">
+          <i *ngIf="datos.punto.revisado" class="fas fa-check text-success"></i>
+          <i
+            *ngIf="!datos.punto.revisado"
+            class="fas fa-minus text-secondary"
+          ></i>
+        </ng-container>
+      </a>
     </div>
   </div>
 </form>
