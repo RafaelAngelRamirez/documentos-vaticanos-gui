@@ -203,12 +203,12 @@ export class PuntoCrudComponent implements OnInit {
     );
   }
 
-  remplazarTextoSeleccionado(textArea: HTMLTextAreaElement) {
+  remplazarTextoSeleccionado(textArea: FormControl) {
     let textoSeleccionado = document.getSelection().toString().trim();
 
     let plantilla = '[+REF+]';
     let texto = textArea.value.replace(textoSeleccionado, plantilla);
-    textArea.value = texto + ' ';
+    textArea.setValue(texto + ' ');
 
     this.agregarReferencia(textoSeleccionado);
   }
