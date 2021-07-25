@@ -87,6 +87,8 @@
           }"
           class="form-control punto-crud-elemento"
           formControlName="contenido"
+          #esteTextArea
+          (keydown.alt.x)="remplazarTextoSeleccionado(esteTextArea)"
         ></textarea>
         <small *ngIf="editando" class="form-text text-muted">Contenido</small>
         <codice-validaciones [campo]="f('contenido')"></codice-validaciones>

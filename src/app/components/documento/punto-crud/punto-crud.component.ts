@@ -171,10 +171,10 @@ export class PuntoCrudComponent implements OnInit {
     punto.contenidoSeparado = punto.contenido?.split('[+REF+]') ?? [];
   }
 
-  agregarReferencia() {
+  agregarReferencia(descripcion: string = 'NUEVA REFERENCIA') {
     let r = {
       _id: null,
-      descripcion: 'NUEVA REFERENCIA',
+      descripcion,
     };
     if (!this.datos.punto.referencias) this.datos.punto.referencias = [];
     this.datos.punto.referencias.push(r as Referencia);
@@ -201,6 +201,16 @@ export class PuntoCrudComponent implements OnInit {
       },
       () => (this.cargando = false)
     );
+  }
+
+  remplazarTextoSeleccionado(textArea: HTMLTextAreaElement) {
+    let textoSeleccionado = document.getSelection().toString().trim();
+
+    let plantilla = '[+REF+]';
+    let texto = textArea.value.replace(textoSeleccionado, plantilla);
+    textArea.value = texto + ' ';
+
+    this.agregarReferencia(textoSeleccionado);
   }
 }
 
