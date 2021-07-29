@@ -7,7 +7,13 @@ import {
   Output,
   Renderer2,
 } from '@angular/core';
-import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
+import {
+  FormGroup,
+  FormControl,
+  Validators,
+  FormArray,
+  AbstractControl,
+} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { InputValidacionesService } from '@codice-progressio/input-validaciones';
 import { DocumentoService } from 'src/app/services/documento.service';
@@ -169,6 +175,7 @@ export class PuntoCrudComponent implements OnInit {
 
   protocoloReferencia(punto: Punto) {
     punto.contenidoSeparado = punto.contenido?.split('[+REF+]') ?? [];
+    punto._contenidoSeparado = punto._contenido?.split('[+REF+]') ?? [];
   }
 
   agregarReferencia(descripcion: string = 'NUEVA REFERENCIA') {
@@ -203,7 +210,7 @@ export class PuntoCrudComponent implements OnInit {
     );
   }
 
-  remplazarTextoSeleccionado(textArea: FormControl) {
+  remplazarTextoSeleccionado(textArea: AbstractControl) {
     let textoSeleccionado = document.getSelection().toString().trim();
 
     let plantilla = '[+REF+]';

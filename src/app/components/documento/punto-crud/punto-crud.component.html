@@ -12,7 +12,7 @@
         </div>
 
         <a
-          *ngIf="datos?.punto?.referencias?.length > 0 || '' | tienePermiso"
+          *ngIf="datos?.punto?.referencias?.length > 0 || ('' | tienePermiso)"
           title="Mostrar referencias de este punto"
           href="javascript:void(0)"
           class="text-muted"
@@ -59,7 +59,11 @@
               let i = index
             "
           >
-            <span [innerHTML]="cont | resaltarTerminos"></span>
+            <span
+              [innerHTML]="
+                cont | resaltarTerminos: this.datos?.punto._contenidoSeparado[i]
+              "
+            ></span>
 
             <ng-container *ngIf="this.datos?.punto?.referencias?.length > 0">
               <app-referencia-crud

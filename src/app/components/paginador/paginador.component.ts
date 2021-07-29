@@ -18,7 +18,7 @@ export class PaginadorComponent implements OnInit {
 
   id: string = '';
   @Input()
-  public set datos(value: Datos) {
+  public set datos(value: Partial<Datos>) {
     this.id = value.id;
     this.dp = this.ps.registro(this.id);
     this.dp.totalElementos = value.totalElementos;

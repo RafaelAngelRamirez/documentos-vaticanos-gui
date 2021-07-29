@@ -9,7 +9,7 @@ import {
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { InputValidacionesService } from '@codice-progressio/input-validaciones';
-import { Documento } from '../../../models/documento.model';
+import { Documento, Punto } from '../../../models/documento.model';
 import { DocumentoService } from '../../../services/documento.service';
 
 @Component({
@@ -63,7 +63,9 @@ export class DocumentoCrudComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  doc: Partial<Documento>;
   crearFormulario(doc: Partial<Documento>) {
+    this.doc = doc;
     this.formulario = new FormGroup({
       _id: new FormControl(doc._id),
       nombre: new FormControl(doc.nombre, [Validators.required]),
@@ -123,7 +125,9 @@ export class DocumentoCrudComponent implements OnInit {
   }
 
   leer() {
-    this.router.navigate(['documento', this.datos.documento.url]);
+    this.router.navigate(['documento', this.datos.documento.url], {
+      relativeTo: this.activatedRoute,
+    });
   }
 }
 
@@ -131,4 +135,5 @@ interface Datos {
   documento: Documento;
   editando: boolean;
   terminos: string[];
+  puntos: Punto[]
 }

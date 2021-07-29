@@ -21,7 +21,7 @@
         <app-documento-crud
           [datos]="{
             documento: documento,
-            termino: documentoService.filtros.terminos
+            terminos: documentoService.filtros.terminos
           }"
           (eliminado)="eliminado($event)"
           (guardado)="guardado($event)"

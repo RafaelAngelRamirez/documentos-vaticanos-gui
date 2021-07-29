@@ -17,7 +17,8 @@ export class DocumentoService {
    * @type {DocumentosBusqueda}
    * @memberof DocumentoService
    */
-  private _resultadoBusquedaDocumentos: DocumentosBusqueda = {} as DocumentosBusqueda;
+  private _resultadoBusquedaDocumentos: DocumentosBusqueda =
+    {} as DocumentosBusqueda;
   documentosBusqueda = new BehaviorSubject<DocumentosBusqueda>(
     this._resultadoBusquedaDocumentos
   );
